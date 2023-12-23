@@ -1,17 +1,28 @@
-ALGS := s21_graph_algorithms.a
-ALGS_NAME := s21_graph_algorithms
-ALGS_PATH := model/GraphAlgorithms/
+NAME:= main.exe
 
-GRAPHS := s21_graph.a
-GRAPHS_NAME := s21_graph
+CC				:= g++
+CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
+
+ALGS_NAME := s21_graph_algorithms.a
+ALGS_PATH := model/GraphAlgorithms/
+ALGS := $(ALGS_PATH)/$(ALGS_NAME)
+
+GRAPHS_NAME := s21_graph.a
 GRAPHS_PATH := model/Graph/
+GRAPHS := $(GRAPHS_PATH)/$(GRAPHS_NAME)
+
+SRC:= main.cc
+
+all: $(NAME)
+
+run: all
+	./$(NAME)
+
+$(NAME): $(SRC) $(ALGS) $(GRAPHS)
+	$(CC) $(CCFLAGS) $(SRC) $(GRAPHS) $(ALGS) -o $(NAME)
 
 $(GRAPHS):
-# $(MAKE) --silent -C model/s21_graph_algorithms make
-	@echo ...compiling! $(GRAPHS_NAME) && make -C $(GRAPHS_PATH)
-	@echo $(GRAPHS_PATH)
+	@echo ...compiling $(GRAPHS_NAME) && make -C $(GRAPHS_PATH)
 
 $(ALGS):
-# $(MAKE) --silent -C model/s21_graph_algorithms make
 	@echo ...compiling $(ALGS_NAME) && make -C $(ALGS_PATH)
-	@echo $(ALGS_PATH)
