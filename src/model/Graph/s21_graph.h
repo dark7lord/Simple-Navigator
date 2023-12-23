@@ -2,11 +2,13 @@
 #define GRAPH_H
 
 #include <iostream>
+#include <fstream>
 #include <string>
+#include <vector>
 
-// #include "inc/s21_list.h"
-// #include "inc/s21_queue.h"
-// #include "inc/s21_stack.h"
+#include "../templates/s21_list.h"
+#include "../templates/s21_queue.h"
+#include "../templates/s21_stack.h"
 
 namespace s21 {
 
@@ -21,12 +23,14 @@ public:
     std::cout << "Deleting Graph" << std::endl;
   };
 
-  void LoadGraphFromFile(std::string ) {};
-  void ExportGraphToDot(std::string ) {};
+  void LoadGraphFromFile(const std::string& filename);
+  void ExportGraphToDot(const std::string& filename);
+  void PrintGraph();
+
+private:
+  std::vector<std::vector<size_t>> matrix_;
+  std::size_t size_matrix_;
 };
 
-int sum (int a, int b);
-
 }
-
 #endif
