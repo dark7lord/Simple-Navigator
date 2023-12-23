@@ -13,7 +13,7 @@ SRC_FILES		:= s21_graph_algorithms.cc
 OBJ_FILES		:= $(SRC_FILES:.cc=.o)
 INC_FILES		:= lie.h
 HEADER			:= s21_graph_algorithms.h
-TEST_FILES		:= run_tests.cpp
+TEST_FILES		:= run_tests.cc
 TEST_EXE		:= tests.exe
 
 SRC				:= $(addprefix $(SRC_DIR), $(SRC_FILES))
