@@ -9,27 +9,27 @@
 #include "../templates/s21_list.h"
 #include "../templates/s21_queue.h"
 #include "../templates/s21_stack.h"
+#include "inc/GraphExceptions.h"
 
 namespace s21 {
 
+using Matrix = std::vector<std::vector<size_t>>;
+using size_t = std::size_t;
+
 class Graph {
 public:
-  Graph() {
-    std::cout << "Creating Graph" << std::endl;
-  };
+  Graph() {};
   // Graph(const Graph&);
   // Graph(const Graph&);
-  ~Graph() {
-    std::cout << "Deleting Graph" << std::endl;
-  };
+  ~Graph() {};
 
   void LoadGraphFromFile(const std::string& filename);
   void ExportGraphToDot(const std::string& filename);
   void PrintGraph();
 
 private:
-  std::vector<std::vector<size_t>> matrix_;
-  std::size_t size_matrix_;
+  Matrix matrix_;
+  size_t size_matrix_;
 };
 
 }

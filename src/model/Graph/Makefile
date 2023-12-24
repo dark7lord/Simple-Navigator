@@ -1,7 +1,7 @@
 NAME			:= s21_graph.a
 
 CC				:= g++
-CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
+CCFLAGS			:= -Wall -Wextra -Werror -std=c++17 -fsanitize=address
 LDFLAGS			:= -lgtest
 
 SRC_DIR			:= src/
@@ -9,11 +9,11 @@ OBJ_DIR			:= obj/
 INC_DIR			:= inc/
 TEST_DIR		:= tests/
 
-SRC_FILES		:= s21_graph.cc
+SRC_FILES		:= s21_graph.cc LoadGraphFromFile.cc
 OBJ_FILES		:= $(SRC_FILES:.cc=.o)
-INC_FILES		:= lie.h
+INC_FILES		:= GraphExceptions.h
 HEADER			:= s21_graph.h
-TEST_FILES		:= run_tests.cc
+TEST_FILES		:= run_tests.cc LoadGraphFromFile_test.cc
 TEST_EXE		:= tests.exe
 
 SRC				:= $(addprefix $(SRC_DIR), $(SRC_FILES))
@@ -36,7 +36,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC)
 test: all
 	@$(CC) $(CCFLAGS) $(TEST) $(NAME) -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
 	./$(TEST_DIR)$(TEST_EXE)
-#	leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE)
+	leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE)
 	rm $(TEST_DIR)$(TEST_EXE)
 
 clean:
