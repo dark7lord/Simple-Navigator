@@ -1,7 +1,7 @@
-NAME:= main.exe
+NAME:= main
 
 CC				:= g++
-CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
+CCFLAGS			:= -Wall -Wextra -Werror -std=c++17 -fsanitize=address
 
 ALGS_NAME		:= s21_graph_algorithms.a
 ALGS_PATH		:= model/GraphAlgorithms
