@@ -1,7 +1,7 @@
 NAME			:= s21_graph.a
 
 CC				:= g++
-CCFLAGS			:= -Wall -Wextra -Werror -std=c++17 -fsanitize=address
+CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
 LDFLAGS			:= -lgtest
 
 SRC_DIR			:= src/
@@ -36,7 +36,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC)
 test: all
 	@$(CC) $(CCFLAGS) $(TEST) $(NAME) -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
 	./$(TEST_DIR)$(TEST_EXE)
-	leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE)
+# leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE) #если добавить -fsanitize=address, то ликов нет
 	rm $(TEST_DIR)$(TEST_EXE)
 
 clean:

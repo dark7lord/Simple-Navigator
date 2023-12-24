@@ -19,8 +19,6 @@ using size_t = std::size_t;
 class Graph {
 public:
   Graph() {};
-  // Graph(const Graph&);
-  // Graph(const Graph&);
   ~Graph() {};
 
   void LoadGraphFromFile(const std::string& filename);
