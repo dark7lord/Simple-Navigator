@@ -9,7 +9,7 @@ OBJ_DIR			:= obj/
 INC_DIR			:= inc/
 TEST_DIR		:= tests/
 
-SRC_FILES		:= s21_graph.cc LoadGraphFromFile.cc
+SRC_FILES		:= s21_graph.cc LoadGraphFromFile.cc ExportGraphToDot.cc
 OBJ_FILES		:= $(SRC_FILES:.cc=.o)
 INC_FILES		:= GraphExceptions.h
 HEADER			:= s21_graph.h

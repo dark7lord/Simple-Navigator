@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
+#include <iomanip>
 
 #include "../templates/s21_list.h"
 #include "../templates/s21_queue.h"
@@ -24,7 +26,8 @@ public:
   void LoadGraphFromFile(const std::string& filename);
   void ExportGraphToDot(const std::string& filename);
   void PrintGraph();
-  // bool Is_Digraph() { return is_digraph_; }
+  void PrintGraphInBrowser();
+  const std::string ToString(const std::string& name) const;
   bool is_digraph = false;
 
 private:
