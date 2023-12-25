@@ -44,6 +44,17 @@ static void ReadMatrixElements(std::ifstream& file, Matrix& matrix, size_t& size
   }
 }
 
+static bool findoutDigraph(Matrix matrix, size_t size) {
+  for (size_t i = 0; i != size; i++) {
+    for (size_t j = 0; j != size; j++) {
+      if (matrix[j][i] != matrix[i][j]) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 void Graph::LoadGraphFromFile(const std::string& filename) {
   std::ifstream file(filename);
 
@@ -68,6 +79,7 @@ void Graph::LoadGraphFromFile(const std::string& filename) {
   SkipWhitespace(file);
   ReadMatrixElements(file, matrix_, size_matrix_);
   file.close();
+  is_digraph = findoutDigraph(matrix_, size_matrix_);
 }
 
 }  // namespace s21

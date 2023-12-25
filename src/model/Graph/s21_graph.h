@@ -18,12 +18,14 @@ using size_t = std::size_t;
 
 class Graph {
 public:
-  Graph() {};
+  Graph(): size_matrix_(0) {};
   ~Graph() {};
 
   void LoadGraphFromFile(const std::string& filename);
   void ExportGraphToDot(const std::string& filename);
   void PrintGraph();
+  // bool Is_Digraph() { return is_digraph_; }
+  bool is_digraph = false;
 
 private:
   Matrix matrix_;
