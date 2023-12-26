@@ -27,12 +27,14 @@ public:
   void ExportGraphToDot(const std::string& filename);
   void PrintGraph();
   void PrintGraphInBrowser();
-  const std::string ToString(const std::string& name) const;
+  size_t GetSize() { return size_matrix_; }
   bool is_digraph = false;
 
 private:
   Matrix matrix_;
   size_t size_matrix_;
+
+  const std::string ToString_() const;
 };
 
 }

@@ -26,25 +26,29 @@ void RemoveFile(const std::string& filename) {
 // Tests
 TEST_F(GraphFixture, InvalidFileTest) {
   std::string invalidFileName = "tests/files/invalid_file.txt";
-  ASSERT_THROW(graph.LoadGraphFromFile(invalidFileName), s21::CantOpenFileException);
+  ASSERT_THROW(
+    graph.LoadGraphFromFile(invalidFileName),
+    s21::CantOpenFileException
+  );
 }
 
 TEST_F(GraphFixture, ParsingErrorTest) {
-  std::string invalidContent = "invalid_content";
-  CreateTempFile("tests/files/parsing_error_file.txt", invalidContent);
-  ASSERT_THROW(graph.LoadGraphFromFile("tests/files/parsing_error_file.txt"), s21::ParsingErrorException);
-  RemoveFile("tests/files/parsing_error_file.txt");
+  ASSERT_THROW(
+    graph.LoadGraphFromFile("tests/files/parsing_error_file.txt"),
+    s21::ParsingErrorException
+  );
 }
 
 TEST_F(GraphFixture, EmptyFileTest) {
-  CreateTempFile("tests/files/empty_file.txt", "");
-  ASSERT_THROW(graph.LoadGraphFromFile("tests/files/empty_file.txt"), s21::EmptyFileException);
-  RemoveFile("tests/files/empty_file.txt");
+  ASSERT_THROW(
+    graph.LoadGraphFromFile("tests/files/empty_file.txt"),
+    s21::EmptyFileException
+  );
 }
 
 TEST_F(GraphFixture, MatrixSizeMismatchTest) {
-  std::string mismatchContent = "2\n1 2\n3 4 5";
-  CreateTempFile("tests/files/matrix_size_mismatch_file.txt", mismatchContent);
-  ASSERT_THROW(graph.LoadGraphFromFile("tests/files/matrix_size_mismatch_file.txt"), s21::MatrixSizeMismatchException);
-  RemoveFile("tests/files/matrix_size_mismatch_file.txt");
+  ASSERT_THROW(graph.LoadGraphFromFile(
+    "tests/files/wrong_matrix.txt"),
+    s21::MatrixSizeMismatchException
+  );
 }

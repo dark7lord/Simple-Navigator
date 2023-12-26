@@ -21,20 +21,24 @@ static void ReadMatrixElements(std::ifstream& file, Matrix& matrix, size_t& size
   SkipWhitespace(file);
 
   for (size_t i = 0; i < size; ++i) {
-    for (size_t j = 0; j < size; ++j) {
-      if (file >> matrix[i][j]) {
-        if (j < size - 1) {
-          SkipWhitespace(file);
-        }
-      } else {
-        file.close();
-        throw ParsingErrorException("Failed to read matrix element", i);
-      }
+    std::string line;
+    std::getline(file, line);
+
+    std::istringstream iss(line);
+    std::vector<size_t> row;
+
+    size_t element;
+    while (iss >> element) {
+      row.push_back(element);
     }
 
-    if (i < size - 1) {
-      SkipWhitespace(file);
+    if (row.size() != size) {
+      file.close();
+      throw MatrixSizeMismatchException(
+          "Number of elements in a row does not match the specified matrix size");
     }
+
+    matrix[i] = row;
   }
 
   if (file.fail()) {
