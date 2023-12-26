@@ -34,7 +34,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 test: all
-	@$(CC) $(CCFLAGS) $(TEST) $(NAME) -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
+	@$(CC) $(CCFLAGS) $(TEST) $(NAME)  -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
 	./$(TEST_DIR)$(TEST_EXE) || true
 # leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE) #если добавить -fsanitize=address, то ликов нет
 	rm -f $(TEST_DIR)$(TEST_EXE) $(TEST_DIR)files/*.tmp.dot

@@ -28,6 +28,7 @@ public:
   void PrintGraph();
   void PrintGraphInBrowser();
   size_t GetSize() { return size_matrix_; }
+  Matrix GetMatrix() { return matrix_; }
   bool is_digraph = false;
 
 private:

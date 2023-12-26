@@ -1,4 +1,5 @@
 NAME			:= s21_graph_algorithms.a
+GRAPH_NAME      := ../Graph/s21_graph.a
 
 CC				:= g++
 CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
@@ -34,7 +35,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 test: all
-	@$(CC) $(CCFLAGS) $(TEST) $(NAME) -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
+	@$(CC) $(CCFLAGS) $(TEST) $(NAME) $(GRAPH_NAME)  -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
 	./$(TEST_DIR)$(TEST_EXE)
 #	leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE)
 	rm $(TEST_DIR)$(TEST_EXE)

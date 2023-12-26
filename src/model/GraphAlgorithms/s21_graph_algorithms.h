@@ -10,6 +10,8 @@
 // #include "inc/s21_queue.h"
 // #include "inc/s21_stack.h"
 
+#include <queue>
+
 namespace s21 {
 
 class GraphAlgorithms {
@@ -24,7 +26,7 @@ public:
   };
 
   void DepthFirstSearch(Graph &graph, int start_vertex);
-  void BreadthFirstSearch(Graph &graph, int start_vertex);
+  std::vector<size_t> BreadthFirstSearch(Graph &graph, int start_vertex);
 };
 
 int sum (int a, int b);
