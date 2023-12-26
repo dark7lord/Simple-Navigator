@@ -17,6 +17,12 @@ public:
     : GraphException("Cannot open file: " + filename) {}
 };
 
+class CantCreateFileException : public GraphException {
+public:
+  explicit CantCreateFileException(const std::string& filename)
+    : GraphException("Cannot create file: " + filename) {}
+};
+
 class ParsingErrorException : public GraphException {
 public:
   explicit ParsingErrorException(const std::string& message, int number_line)
@@ -35,6 +41,11 @@ public:
       : GraphException("File is empty: " + filename) {}
 };
 
+class EmptyGraphException : public GraphException {
+public:
+  explicit EmptyGraphException()
+    : GraphException("Graph is empty") {}
+};
 
 }  // namespace s21
 

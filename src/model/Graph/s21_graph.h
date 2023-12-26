@@ -5,6 +5,8 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <sstream>
+#include <iomanip>
 
 #include "../templates/s21_list.h"
 #include "../templates/s21_queue.h"
@@ -18,18 +20,21 @@ using size_t = std::size_t;
 
 class Graph {
 public:
-  Graph() {};
-  // Graph(const Graph&);
-  // Graph(const Graph&);
+  Graph(): size_matrix_(0) {};
   ~Graph() {};
 
   void LoadGraphFromFile(const std::string& filename);
   void ExportGraphToDot(const std::string& filename);
   void PrintGraph();
+  void PrintGraphInBrowser();
+  size_t GetSize() { return size_matrix_; }
+  bool is_digraph = false;
 
 private:
   Matrix matrix_;
   size_t size_matrix_;
+
+  const std::string ToString_() const;
 };
 
 }

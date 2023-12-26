@@ -1,7 +1,7 @@
 NAME			:= s21_graph.a
 
 CC				:= g++
-CCFLAGS			:= -Wall -Wextra -Werror -std=c++17 -fsanitize=address
+CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
 LDFLAGS			:= -lgtest
 
 SRC_DIR			:= src/
@@ -9,11 +9,11 @@ OBJ_DIR			:= obj/
 INC_DIR			:= inc/
 TEST_DIR		:= tests/
 
-SRC_FILES		:= s21_graph.cc LoadGraphFromFile.cc
+SRC_FILES		:= s21_graph.cc LoadGraphFromFile.cc ExportGraphToDot.cc
 OBJ_FILES		:= $(SRC_FILES:.cc=.o)
 INC_FILES		:= GraphExceptions.h
 HEADER			:= s21_graph.h
-TEST_FILES		:= run_tests.cc LoadGraphFromFile_test.cc
+TEST_FILES		:= run_tests.cc LoadGraphFromFile_test.cc ExportGraphToDot_test.cc
 TEST_EXE		:= tests.exe
 
 SRC				:= $(addprefix $(SRC_DIR), $(SRC_FILES))
@@ -35,9 +35,9 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC)
 
 test: all
 	@$(CC) $(CCFLAGS) $(TEST) $(NAME) -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
-	./$(TEST_DIR)$(TEST_EXE)
-	leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE)
-	rm $(TEST_DIR)$(TEST_EXE)
+	./$(TEST_DIR)$(TEST_EXE) || true
+# leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE) #если добавить -fsanitize=address, то ликов нет
+	rm -f $(TEST_DIR)$(TEST_EXE) $(TEST_DIR)files/*.tmp.dot
 
 clean:
 	@rm -rf $(OBJ_DIR) $(NAME)

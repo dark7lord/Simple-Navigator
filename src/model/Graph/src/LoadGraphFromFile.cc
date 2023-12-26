@@ -21,24 +21,42 @@ static void ReadMatrixElements(std::ifstream& file, Matrix& matrix, size_t& size
   SkipWhitespace(file);
 
   for (size_t i = 0; i < size; ++i) {
-    for (size_t j = 0; j < size; ++j) {
-      file >> matrix[i][j];
+    std::string line;
+    std::getline(file, line);
 
-      if (file.fail()) {
-        file.close();
-        throw ParsingErrorException("Failed to read matrix element", i);
-      }
+    std::istringstream iss(line);
+    std::vector<size_t> row;
+
+    size_t element;
+    while (iss >> element) {
+      row.push_back(element);
     }
 
-    // if (file.peek() != '\n') {
-    //   file.close();
-    //   throw MatrixSizeMismatchException(
-    //     "Number of elements in a row does not match the specified matrix size");
-    // }
+    if (row.size() != size) {
+      file.close();
+      throw MatrixSizeMismatchException(
+          "Number of elements in a row does not match the specified matrix size");
+    }
 
-    file.get();
-    SkipWhitespace(file);
+    matrix[i] = row;
   }
+
+  if (file.fail()) {
+    file.close();
+    throw MatrixSizeMismatchException(
+        "Number of elements in a row does not match the specified matrix size");
+  }
+}
+
+static bool findoutDigraph(Matrix matrix, size_t size) {
+  for (size_t i = 0; i != size; i++) {
+    for (size_t j = 0; j != size; j++) {
+      if (matrix[j][i] != matrix[i][j]) {
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 void Graph::LoadGraphFromFile(const std::string& filename) {
@@ -65,6 +83,7 @@ void Graph::LoadGraphFromFile(const std::string& filename) {
   SkipWhitespace(file);
   ReadMatrixElements(file, matrix_, size_matrix_);
   file.close();
+  is_digraph = findoutDigraph(matrix_, size_matrix_);
 }
 
 }  // namespace s21
