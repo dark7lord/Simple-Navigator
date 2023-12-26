@@ -30,11 +30,11 @@ static void ReadMatrixElements(std::ifstream& file, Matrix& matrix, size_t& size
       }
     }
 
-    if (file.peek() != '\n') {
-      file.close();
-      throw MatrixSizeMismatchException(
-        "Number of elements in a row does not match the specified matrix size");
-    }
+    // if (file.peek() != '\n') {
+    //   file.close();
+    //   throw MatrixSizeMismatchException(
+    //     "Number of elements in a row does not match the specified matrix size");
+    // }
 
     file.get();
     SkipWhitespace(file);
