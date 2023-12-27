@@ -26,7 +26,7 @@ public:
   };
 
   void DepthFirstSearch(Graph &graph, int start_vertex);
-  std::vector<size_t> BreadthFirstSearch(Graph &graph, int start_vertex);
+  std::vector<int> BreadthFirstSearch(Graph &graph, int start_vertex);
 };
 
 int sum (int a, int b);
