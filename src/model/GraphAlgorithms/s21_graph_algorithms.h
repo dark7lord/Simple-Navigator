@@ -6,30 +6,26 @@
 
 #include "../Graph/s21_graph.h"
 
-// #include "inc/s21_list.h"
-// #include "inc/s21_queue.h"
-// #include "inc/s21_stack.h"
-
-#include <queue>
+#include "../templates/s21_list.h"
+#include "../templates/s21_queue.h"
+#include "../templates/s21_stack.h"
 
 namespace s21 {
 
 class GraphAlgorithms {
 public:
-  GraphAlgorithms() {
-    std::cout << "Creating Graph" << std::endl;
-  };
-  // Graph(const Graph&);
-  // Graph(const Graph&);
-  ~GraphAlgorithms() {
-    std::cout << "Deleting Graph" << std::endl;
-  };
+  GraphAlgorithms() {};
+  ~GraphAlgorithms() {};
 
   void DepthFirstSearch(Graph &graph, int start_vertex);
-  std::vector<int> BreadthFirstSearch(Graph &graph, int start_vertex);
+  std::vector<size_t> BreadthFirstSearch(Graph &graph, size_t start_vertex);
+
+  Matrix GetShortestPathsBetweenAllVertices(Graph &graph);
+  // void PrintPath(const Matrix& next, size_t start, size_t end);
 };
 
-int sum (int a, int b);
+// void PrintPaths(const Matrix& adjacency_matrix, const Matrix& distance_matrix);
+bool hasElement(std::vector<size_t> visited, size_t elem);
 
 }
 

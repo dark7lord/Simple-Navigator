@@ -8,9 +8,6 @@
 #include <sstream>
 #include <iomanip>
 
-#include "../templates/s21_list.h"
-#include "../templates/s21_queue.h"
-#include "../templates/s21_stack.h"
 #include "inc/GraphExceptions.h"
 
 namespace s21 {
@@ -25,10 +22,10 @@ public:
 
   void LoadGraphFromFile(const std::string& filename);
   void ExportGraphToDot(const std::string& filename);
-  void PrintGraph();
+  void PrintGraph() const;
   void PrintGraphInBrowser();
-  size_t GetSize() { return size_matrix_; }
-  Matrix GetMatrix() { return matrix_; }
+  size_t GetSize() const { return size_matrix_; }
+  Matrix GetMatrix() const { return matrix_; }
   bool is_digraph = false;
 
 private:
@@ -37,6 +34,9 @@ private:
 
   const std::string ToString_() const;
 };
+
+void PrintMatrix(const Matrix& matrix);
+std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 
 }
 #endif

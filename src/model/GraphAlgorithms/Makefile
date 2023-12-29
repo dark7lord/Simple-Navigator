@@ -1,8 +1,8 @@
 NAME			:= s21_graph_algorithms.a
-GRAPH_NAME      := ../Graph/s21_graph.a
+GRAPH_NAME		:= ../Graph/s21_graph.a
 
 CC				:= g++
-CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
+CCFLAGS			:= -Wall -Wextra -Werror -std=c++17 -g
 LDFLAGS			:= -lgtest
 
 SRC_DIR			:= src/
@@ -10,7 +10,7 @@ OBJ_DIR			:= obj/
 INC_DIR			:= inc/
 TEST_DIR		:= tests/
 
-SRC_FILES		:= s21_graph_algorithms.cc
+SRC_FILES		:= s21_graph_algorithms.cc GetShortestPathsBetweenAllVertices.cc
 OBJ_FILES		:= $(SRC_FILES:.cc=.o)
 INC_FILES		:= lie.h
 HEADER			:= s21_graph_algorithms.h
