@@ -11,6 +11,7 @@
 // #include "inc/s21_stack.h"
 
 #include <queue>
+#include <stack>
 
 namespace s21 {
 
@@ -25,7 +26,10 @@ public:
     std::cout << "Deleting Graph" << std::endl;
   };
 
-  void DepthFirstSearch(Graph &graph, int start_vertex);
+  // std::vector<size_t> visited;
+  // std::stack<size_t> myStack;
+
+  std::vector<size_t> DepthFirstSearch(Graph &graph, int start_vertex);
   std::vector<size_t> BreadthFirstSearch(Graph &graph, int start_vertex);
 };
 

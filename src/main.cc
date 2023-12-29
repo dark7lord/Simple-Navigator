@@ -1,8 +1,11 @@
 #include "model/Graph/s21_graph.h"
-//"model/GraphAlgorithms/s21_graph_algorithms.h"
+#include  "model/GraphAlgorithms/s21_graph_algorithms.h"
 
 int main() {
   s21::Graph graph;
+  s21::GraphAlgorithms GA;
+  //Graph &graph
+  int start_vertex = 0;
 
   try {
     // graph.LoadGraphFromFile("files/depth_first_search.txt");
@@ -13,6 +16,8 @@ int main() {
     // graph.ExportGraphToConsoleOut("test_example_graph");
     graph.PrintGraphInBrowser();
     // std::cout <<  "Is digraph? " << std::boolalpha << graph.is_digraph << std::endl;
+    GA.DepthFirstSearch(graph, start_vertex);
+    
   } catch (const s21::GraphException& e) {
     std::cerr << e.what() << std::endl;
   }
