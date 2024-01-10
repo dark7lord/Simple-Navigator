@@ -17,10 +17,9 @@ namespace s21 {
 
 class GraphAlgorithms {
 public:
-  GraphAlgorithms() {
-    std::cout << "Creating Graph" << std::endl;
+  GraphAlgorithms(Graph graph) : graph_(graph) {
+    std::cout << "Creating Graph Algorithms" << std::endl;
   };
-  // Graph(const Graph&);
   // Graph(const Graph&);
   ~GraphAlgorithms() {
     std::cout << "Deleting Graph" << std::endl;
@@ -29,12 +28,12 @@ public:
   // std::vector<size_t> visited;
   // std::stack<size_t> myStack;
 
-  std::vector<size_t> DepthFirstSearch(Graph &graph, int start_vertex);
-  std::vector<size_t> BreadthFirstSearch(Graph &graph, int start_vertex);
+  std::vector<size_t> DepthFirstSearch(int start_vertex);
+  // std::vector<size_t> BreadthFirstSearch(int start_vertex);
+
+private:
+  Graph graph_{};
 };
 
-int sum (int a, int b);
-
 }
-
 #endif

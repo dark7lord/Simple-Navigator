@@ -1,7 +1,7 @@
 NAME			:= s21_graph.a
 
 CC				:= g++
-CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
+CCFLAGS			:= -g -Wall -Wextra -Werror -std=c++17
 LDFLAGS			:= -lgtest
 
 SRC_DIR			:= src/

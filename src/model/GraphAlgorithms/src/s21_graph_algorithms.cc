@@ -2,10 +2,6 @@
 
 namespace s21 {
 
-int sum (int a, int b) {
-  return a + b;
-}
-
 
 bool NewElement(std::vector<size_t> contain, size_t elem) {
   for (size_t i = 0; i < contain.size(); i++) {
@@ -14,30 +10,70 @@ bool NewElement(std::vector<size_t> contain, size_t elem) {
   return true;
 }
 
-std::vector<size_t> GraphAlgorithms::DepthFirstSearch(Graph &graph, int start_vertex) {
-  std::vector<size_t> visited; //хранения пути 
-  std::vector<size_t> contain; //отслеживания посещенных вершин 
+// std::vector<size_t> GraphAlgorithms::DepthFirstSearch(int start_vertex) {
+//   std::vector<size_t> visited; //хранения пути
+  
+//   std::vector<size_t> contain{graph_.GetSize()}; //отслеживания посещенных вершин 
+//   std::stack<size_t> myStack; 
+//   std::cout << contain.size() << std::endl;
+//   myStack.push(start_vertex);
+//   contain[start_vertex] = start_vertex;
+
+//   //std::cerr << "-------" << visited[1] << std::endl;
+
+//   while (!myStack.empty()) { // Выполняется, пока стек не будет пустым
+//         int current = myStack.top(); // Берем верхний элемент
+//         myStack.pop(); // удаляем этот элемент
+//         visited.push_back(current); //добавляем новый элемент 
+
+//         for (size_t i = 0; i < graph_.GetSize(); i++) {
+//           size_t edge = graph_.GetMatrix()[myStack.top()][i];
+//             if ((edge) && (NewElement(contain, i))) {
+//                 myStack.push(i);
+//                 contain.push_back(i);
+//             }
+//         }
+//     }
+
+//   for (int i = 0; i < 5;i++) {
+//     std::cerr << "-------" << visited[i] << std::endl;
+//   }
+
+//   return visited;
+
+// }
+
+std::vector<size_t> GraphAlgorithms::DepthFirstSearch(int start_vertex) {
+  std::vector<size_t> visited; // хранение пути
+  std::vector<size_t> contain{graph_.GetSize()};// отслеживание посещенных вершин
   std::stack<size_t> myStack; 
-
+//false - 0
+  //true - 1
   myStack.push(start_vertex);
-  contain[start_vertex] = true;
+  contain[start_vertex] = start_vertex;
 
-  while (!myStack.empty()) { // Выполняется, пока стек не будет пустым
-        int current = myStack.top(); // Берем верхний элемент
+  while (!myStack.empty()) { // выполняется, пока стек не будет пустым
+        size_t current = myStack.top(); // берем верхний элемент
         myStack.pop(); // удаляем этот элемент
-        visited.push_back(current); //добавляем новый элемент 
+        visited.push_back(current); // добавляем новый элемент 
 
-        for (size_t i = 0; i < graph.GetSize(); i++) {
-          size_t edge = graph.GetMatrix()[myStack.top()][i];
-            if ((edge) && (NewElement(contain, i))) {
-                myStack.push(i);
-                contain.push_back(i);
-            }
+//std::cout << "GetMatrix: " << graph_.GetSize() << std::endl;
+
+        for (size_t i = 0; i < graph_.GetSize(); ++i) {
+          size_t edge = graph_.GetMatrix()[current][i];
+          std::cout << "GetMatrix: " << graph_.GetMatrix()[current][i] << std::endl;
+          if (edge && contain[i] != current) { // проверяем смежность и отсутствие посещения
+            myStack.push(i);
+            contain[i] = start_vertex;
+          }
         }
     }
 
-  return visited;
+  for (int i = 0; i < 5;i++) {
+    std::cout << "Посещена вершина: " << visited[i] << std::endl;
+  }
 
+  return visited;
 }
 
 // std::vector<size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph, int start_vertex)  {
