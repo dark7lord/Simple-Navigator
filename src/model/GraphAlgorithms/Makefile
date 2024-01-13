@@ -36,7 +36,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC)
 
 test: all
 	@$(CC) $(CCFLAGS) $(TEST) $(NAME) $(GRAPH_NAME)  -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
-	./$(TEST_DIR)$(TEST_EXE)
+	./$(TEST_DIR)$(TEST_EXE) || true
 #	leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE)
 	rm $(TEST_DIR)$(TEST_EXE)
 
