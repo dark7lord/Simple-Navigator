@@ -6,12 +6,12 @@
 
 #include "../Graph/s21_graph.h"
 
-// #include "inc/s21_list.h"
-// #include "inc/s21_queue.h"
-// #include "inc/s21_stack.h"
+#include "../templates/s21_list.h"
+#include "../templates/s21_queue.h"
+#include "../templates/s21_stack.h"
 
-#include <queue>
-#include <stack>
+//#include <queue>
+//#include <stack>
 
 namespace s21 {
 
@@ -28,8 +28,8 @@ public:
   // std::vector<size_t> visited;
   // std::stack<size_t> myStack;
 
-  std::vector<size_t> DepthFirstSearch(int start_vertex);
-  // std::vector<size_t> BreadthFirstSearch(int start_vertex);
+  std::vector<size_t> DepthFirstSearch(Graph &graph, int start_vertex);
+  std::vector<size_t> BreadthFirstSearch(Graph &graph, int start_vertex);
 
 private:
   Graph graph_{};
