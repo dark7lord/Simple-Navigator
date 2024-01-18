@@ -13,6 +13,9 @@
 //#include <queue>
 //#include <stack>
 
+#include <set>
+#include <vector>
+
 namespace s21 {
 
 class GraphAlgorithms {
@@ -25,11 +28,16 @@ public:
     std::cout << "Deleting Graph" << std::endl;
   };
 
-  // std::vector<size_t> visited;
-  // std::stack<size_t> myStack;
+   std::vector<size_t> visited;
 
-  std::vector<size_t> DepthFirstSearch(Graph &graph, int start_vertex);
-  std::vector<size_t> BreadthFirstSearch(Graph &graph, int start_vertex);
+  // std::stack<size_t> myStack;
+  using Matrix = std::vector<std::vector<size_t>>;
+
+  //std::vector<size_t> DepthFirstSearch(Graph &graph, int start_vertex);
+  //std::vector<size_t> BreadthFirstSearch(Graph &graph, int start_vertex);
+
+  Matrix GetLeastSpanningTree(Graph &graph);
+
 
 private:
   Graph graph_{};
