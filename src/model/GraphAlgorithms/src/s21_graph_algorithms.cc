@@ -8,12 +8,10 @@ std::set<int> visited;
 std::set<int> unvisited;
 
 // Создаем исходную матрицу, которая будет представлять собой остовное дерево (пометим как spanning_tree)
-spanning_tree = [];
-//std::Matrix<int> spanning_tree(vertexes_count, vertexes_count, kInf);
+Matrix spanning_tree(std::vector<int> number_of_vertices, std::vector<int> number_of_vertic);
 
 // Создаем массив ребер (пометим как tree_edges), ребро в данном случае это структура, которая хранит две вершины и вес самого ребра.
-tree_edges = [];
-//std::vector<Edge> tree_edges;
+std::vector<Edge> tree_edges;
 
 // Инициализируем множество непосещенных вершин всеми, существующими в графе вершинами
 unvisited = set(all_vertices);

@@ -28,11 +28,17 @@ public:
     std::cout << "Deleting Graph" << std::endl;
   };
 
-   std::vector<size_t> visited;
+  std::vector<size_t> visited;
+  struct Edge {
+    int from;
+    int to;
+    int weight;
 
-  // std::stack<size_t> myStack;
+      // Конструктор для удобного создания ребра
+      //Edge(int from, int to, int weight) : from(from), to(to), weight(weight) {}
+  };
+
   using Matrix = std::vector<std::vector<size_t>>;
-
   //std::vector<size_t> DepthFirstSearch(Graph &graph, int start_vertex);
   //std::vector<size_t> BreadthFirstSearch(Graph &graph, int start_vertex);
 
