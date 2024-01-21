@@ -1,61 +1,137 @@
 #include "../s21_graph_algorithms.h"
+#include <iostream>
 
 namespace s21 {
 
-Matrix GraphAlgorithms::GetLeastSpanningTree(Graph &graph) {
-    // Создаем два множества, для посещенных и не посещенных вершин (пометим, соответственно, как visited и unvisited)
-std::set<int> visited;
-std::set<int> unvisited;
-
-// Создаем исходную матрицу, которая будет представлять собой остовное дерево (пометим как spanning_tree)
-Matrix spanning_tree(std::vector<int> number_of_vertices, std::vector<int> number_of_vertic);
-
-// Создаем массив ребер (пометим как tree_edges), ребро в данном случае это структура, которая хранит две вершины и вес самого ребра.
-std::vector<Edge> tree_edges;
-
-// Инициализируем множество непосещенных вершин всеми, существующими в графе вершинами
-unvisited = set(all_vertices);
-
-// Выбираем, случайным образом, вершину, от которой будет строиться остовное дерево, и помечаем эту вершину как посещенную, соответственно из множества непосещенных ее убираем
-start_vertex = random_choice(all_vertices)
-visited.add(start_vertex)
-unvisited.remove(start_vertex)
-
-// Пока множество непосещенных вершин не пусто:
-while unvisited is not empty:
-    // Создаем ребро инициализируя его поля бесконечностями
-    min_edge = {from: None, to: None, weight: infinity}
-
-    // Перебираем все посещенные вершины (пометим как from):
-    for from_vertex in visited:
-        // Перебираем все вершины графа (пометим как to):
-        for to_vertex in all_vertices:
-            // Если to является непосещенной вершиной и ребро между вершинами {from, to} существует и вес ребра (созданного в пункте 5.1) больше чем вес ребра между вершинами {from, to}, то:
-            if to_vertex in unvisited and graph_has_edge(from_vertex, to_vertex):
-                edge_weight = get_edge_weight(from_vertex, to_vertex)
-                if edge_weight < min_edge.weight:
-                    // Обновляем ребро (5.1) вершинами from и to и весом между этими вершинами
-                    min_edge.from = from_vertex
-                    min_edge.to = to_vertex
-                    min_edge.weight = edge_weight
-
-    // Если вес ребра не равен бесконечности:
-    if min_edge.weight < infinity:
-        // Добавляем в массив tree_edges новое ребро
-        tree_edges.append(min_edge)
-        // Удаляем из множества непосещенных вершин вершину to
-        unvisited.remove(min_edge.to)
-        // Добавляем в множество посещенных вершин вершину to
-        visited.add(min_edge.to)
-    else:
-        // Иначе прекращаем цикл
-        break
-
-// Пробегаясь по всем ребрам массива tree_edges:
-for edge in tree_edges:
-    // Инициализируем spanning_tree, добавляя в нее ребра (добавлять нужно в обе стороны, чтобы граф получился неориентированным)
-    spanning_tree.append(edge)
+void GraphAlgorithms::Print(std::set<unsigned> &set) {
+  for(auto it = set.begin(); it != set.end(); it++) {
+    std::cout << *it << std::endl;
+  }
 }
+
+
+// TEST CHATGPT
+// =================================================================================================
+std::vector<Edge> GraphAlgorithms::GetLeastSpanningTree(const Matrix& graph) {
+  size_t numVertices = graph.size();
+
+  // Initialize data structures
+  std::vector<size_t> cheapestCost(numVertices, std::numeric_limits<size_t>::max());
+  std::vector<Edge> cheapestEdge(numVertices, Edge(-1, -1, std::numeric_limits<int>::max()));
+  std::vector<bool> inTree(numVertices, false);
+
+  // Initialize the starting vertex
+  size_t startVertex = 0;  // You can choose any starting vertex arbitrarily
+  cheapestCost[startVertex] = 0;
+
+  // Main loop of Prim's algorithm
+  for (size_t i = 0; i < numVertices; ++i) {
+    // Find the vertex with the minimum cost that is not yet in the tree
+    size_t currentVertex = numVertices;  // Initialize to an invalid value
+    for (size_t v = 0; v < numVertices; ++v) {
+      if (!inTree[v] && (currentVertex == numVertices || cheapestCost[v] < cheapestCost[currentVertex])) {
+        currentVertex = v;
+      }
+    }
+
+    // Add the current vertex to the tree
+    inTree[currentVertex] = true;
+
+    // Update cost and edge information for adjacent vertices
+    for (size_t neighbor = 0; neighbor < numVertices; ++neighbor) {
+      if (graph[currentVertex][neighbor] > 0 
+          && !inTree[neighbor] 
+          && graph[currentVertex][neighbor] < cheapestCost[neighbor]) {
+        cheapestCost[neighbor] = graph[currentVertex][neighbor];
+        cheapestEdge[neighbor] = Edge(currentVertex, neighbor, graph[currentVertex][neighbor]);
+      }
+    }
+  }
+
+  // Return the resulting minimum spanning tree
+  return cheapestEdge;
+}
+
+
+// CURRENT VERSION
+// =================================================================================================
+// void GraphAlgorithms::GetLeastSpanningTree(Graph &graph) {
+//     // Создаем два множества, для посещенных и не посещенных вершин 
+//     // (пометим, соответственно, как visited и unvisited)
+//     std::set<unsigned> visited;
+//     std::set<unsigned> unvisited;
+
+//     // Создаем исходную матрицу, которая будет представлять собой остовное дерево 
+//     // (пометим как spanning_tree)
+//     Matrix spanning_tree(std::vector<int> number_of_vertices, std::vector<int> number_of_vertic);
+
+//     // Создаем массив ребер (пометим как tree_edges), 
+//     // ребро в данном случае это структура, 
+//     // которая хранит две вершины и вес самого ребра.
+//     std::vector<Edge> tree_edges;
+
+//     // Инициализируем множество непосещенных вершин всеми, существующими в графе вершинами
+//     for (size_t i = 0; i < graph.GetMatrix().size(); i++) {
+//         unvisited.insert(i);
+//     }
+
+//     // Print(unvisited);
+    
+//     // Выбираем, случайным образом
+//     unsigned vertex = 0;
+
+//     // Помечаем эту вершину как посещенной
+//     visited.insert(vertex);
+//     // убираем ее из множества непосещенных 
+//     unvisited.erase(vertex);
+    
+//     // std::cout << "visited: " << std::endl;
+//     // Print(visited);
+//     // std::cout << "unvisited: " << std::endl;
+//     // Print(unvisited);
+    
+//     while (!unvisited.empty()) {
+
+//     }
+    
+
+    // // Пока множество непосещенных вершин не пусто:
+    // while unvisited is not empty:
+    //     // Создаем ребро инициализируя его поля бесконечностями
+    //     min_edge = {from: None, to: None, weight: infinity}
+
+    //     // Перебираем все посещенные вершины (пометим как from):
+    //     for from_vertex in visited:
+    //         // Перебираем все вершины графа (пометим как to):
+    //         for to_vertex in all_vertices:
+    //             // Если to является непосещенной вершиной и ребро между вершинами {from, to} существует и вес ребра (созданного в пункте 5.1) больше чем вес ребра между вершинами {from, to}, то:
+    //             if to_vertex in unvisited and graph_has_edge(from_vertex, to_vertex):
+    //                 edge_weight = get_edge_weight(from_vertex, to_vertex)
+    //                 if edge_weight < min_edge.weight:
+    //                     // Обновляем ребро (5.1) вершинами from и to и весом между этими вершинами
+    //                     min_edge.from = from_vertex
+    //                     min_edge.to = to_vertex
+    //                     min_edge.weight = edge_weight
+
+    //     // Если вес ребра не равен бесконечности:
+    //     if min_edge.weight < infinity:
+    //         // Добавляем в массив tree_edges новое ребро
+    //         tree_edges.append(min_edge)
+    //         // Удаляем из множества непосещенных вершин вершину to
+    //         unvisited.remove(min_edge.to)
+    //         // Добавляем в множество посещенных вершин вершину to
+    //         visited.add(min_edge.to)
+    //     else:
+    //         // Иначе прекращаем цикл
+    //         break
+
+    // // Пробегаясь по всем ребрам массива tree_edges:
+    // for edge in tree_edges:
+    //     // Инициализируем spanning_tree, добавляя в нее ребра (добавлять нужно в обе стороны, чтобы граф получился неориентированным)
+    //     spanning_tree.append(edge)
+// }
+
+
 
 // bool NewElement(const std::vector<size_t>& contain, size_t elem) {
 //   for (size_t i = 0; i < contain.size(); i++) {
