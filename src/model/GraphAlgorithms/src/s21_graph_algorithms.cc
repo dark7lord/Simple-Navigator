@@ -14,16 +14,14 @@ void GraphAlgorithms::Print(std::set<unsigned> &set) {
 // =================================================================================================
 std::vector<Edge> GraphAlgorithms::GetLeastSpanningTree(const Matrix& graph) {
   size_t numVertices = graph.size();
-
+  size_t cheapestEdgeSize = numVertices - 1;  // Corrected size
   // Initialize data structures
   std::vector<size_t> cheapestCost(numVertices, std::numeric_limits<size_t>::max());
   std::vector<Edge> cheapestEdge(numVertices, Edge(-1, -1, std::numeric_limits<int>::max()));
   std::vector<bool> inTree(numVertices, false);
-
   // Initialize the starting vertex
   size_t startVertex = 0;  // You can choose any starting vertex arbitrarily
   cheapestCost[startVertex] = 0;
-
   // Main loop of Prim's algorithm
   for (size_t i = 0; i < numVertices; ++i) {
     // Find the vertex with the minimum cost that is not yet in the tree
@@ -33,23 +31,33 @@ std::vector<Edge> GraphAlgorithms::GetLeastSpanningTree(const Matrix& graph) {
         currentVertex = v;
       }
     }
-
     // Add the current vertex to the tree
     inTree[currentVertex] = true;
-
     // Update cost and edge information for adjacent vertices
     for (size_t neighbor = 0; neighbor < numVertices; ++neighbor) {
       if (graph[currentVertex][neighbor] > 0 
           && !inTree[neighbor] 
-          && graph[currentVertex][neighbor] < cheapestCost[neighbor]) {
+          && graph[currentVertex][neighbor] < cheapestCost[neighbor]
+      ) {
         cheapestCost[neighbor] = graph[currentVertex][neighbor];
-        cheapestEdge[neighbor] = Edge(currentVertex, neighbor, graph[currentVertex][neighbor]);
+        cheapestEdge.at(neighbor) = Edge(currentVertex, neighbor, graph[currentVertex][neighbor]);  // Corrected index
       }
     }
   }
+  std::vector<Edge> spanning_tree(cheapestEdgeSize, Edge(-1, -1, std::numeric_limits<int>::max()));
+  
+  // КОСТЫЛЬ: удаление лишнего элемента в начале вектора
+  int key = 0;
+  for (const s21::Edge& edge : cheapestEdge) {
+    if(edge.from == -1) {
+      continue;
+    }
+    spanning_tree.at(key) = edge;
+    key++;
+  }
 
   // Return the resulting minimum spanning tree
-  return cheapestEdge;
+  return spanning_tree;
 }
 
 
