@@ -10,11 +10,11 @@ OBJ_DIR			:= obj/
 INC_DIR			:= inc/
 TEST_DIR		:= tests/
 
-SRC_FILES		:= s21_graph_algorithms.cc
+SRC_FILES		:= s21_graph_algorithms.cc s21_get_least_spanninng_tree.cc
 OBJ_FILES		:= $(SRC_FILES:.cc=.o)
 INC_FILES		:= lie.h
 HEADER			:= s21_graph_algorithms.h
-TEST_FILES		:= run_tests.cc
+TEST_FILES		:= run_tests.cc tests_get_least_spanning_tree.cc
 TEST_EXE		:= tests.exe
 
 SRC				:= $(addprefix $(SRC_DIR), $(SRC_FILES))
