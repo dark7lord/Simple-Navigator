@@ -3,15 +3,13 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
+#include <set>
 
 #include "../Graph/s21_graph.h"
-
 #include "../templates/s21_list.h"
 #include "../templates/s21_queue.h"
 #include "../templates/s21_stack.h"
-
-#include <vector>
-#include <set>
 
 namespace s21 {
 
@@ -25,17 +23,14 @@ struct Edge {
 
 class GraphAlgorithms {
 public:
-  GraphAlgorithms() {
-    std::cout << "Creating Graph Algorithms" << std::endl;
-  };
-  ~GraphAlgorithms() {
-    std::cout << "Deleting Graph" << std::endl;
-  };
-
+  GraphAlgorithms() {};
+  ~GraphAlgorithms() {};
   std::vector<size_t> visited;
+
+  std::vector<size_t> DepthFirstSearch(Graph &graph, int start_vertex);
+  std::vector<size_t> BreadthFirstSearch(Graph &graph, size_t start_vertex);
   std::vector<Edge> GetLeastSpanningTree(const Matrix& graph);
-
-
+  Matrix GetShortestPathsBetweenAllVertices(Graph &graph); 
 
 private:
   void Print(std::set<unsigned> &);

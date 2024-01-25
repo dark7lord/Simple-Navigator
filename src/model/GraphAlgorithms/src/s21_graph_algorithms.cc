@@ -3,53 +3,68 @@
 
 namespace s21 {
 
-void GraphAlgorithms::Print(std::set<unsigned> &set) {
-  for(auto it = set.begin(); it != set.end(); it++) {
-    std::cout << *it << std::endl;
+static bool hasElement(std::vector<size_t> visited, size_t elem) {
+  for (size_t i = 0; i < visited.size(); i++) {
+    if (visited[i] == elem) return true;
   }
+  return false;
 }
 
-std::vector<Edge> GraphAlgorithms::GetLeastSpanningTree(const Matrix& graph) {
-  size_t numVertices = graph.size();
-  size_t cheapestEdgeSize = numVertices - 1; 
 
-  std::vector<size_t> cheapestCost(numVertices, std::numeric_limits<size_t>::max());
-  std::vector<Edge> cheapestEdge(numVertices, Edge(-1, -1, std::numeric_limits<int>::max()));
-  std::vector<bool> inTree(numVertices, false);
+std::vector<size_t> GraphAlgorithms::DepthFirstSearch(Graph& graph, int start_vertex) {
+  std::vector<size_t> visited;
+  s21::stack<size_t> myStack;
+  Matrix matrix = graph.GetMatrix();
+  size_t size_graph = graph.GetSize();
+  myStack.push(start_vertex);
 
-  size_t startVertex = 0;
-  cheapestCost[startVertex] = 0;
-  for (size_t i = 0; i < numVertices; ++i) {
-    size_t currentVertex = numVertices;
-    for (size_t v = 0; v < numVertices; ++v) {
-      if (!inTree[v] && (currentVertex == numVertices || cheapestCost[v] < cheapestCost[currentVertex])) {
-        currentVertex = v;
-      }
-    }
-    inTree[currentVertex] = true;
-    for (size_t neighbor = 0; neighbor < numVertices; ++neighbor) {
-      if (graph[currentVertex][neighbor] > 0 
-          && !inTree[neighbor] 
-          && graph[currentVertex][neighbor] < cheapestCost[neighbor]
-      ) {
-        cheapestCost[neighbor] = graph[currentVertex][neighbor];
-        cheapestEdge.at(neighbor) = Edge(currentVertex, neighbor, graph[currentVertex][neighbor]);
+  while (!myStack.empty()) {
+    size_t current = myStack.top();
+    myStack.pop();
+
+    if (!hasElement(visited, current)) {
+      visited.push_back(current);
+
+      for (size_t i = size_graph; i > 0; --i) {
+        bool hasPath = matrix[current - 1][i - 1] != 0;
+
+        if (hasPath && !hasElement(visited, i)) {
+          myStack.push(i);
+        }
       }
     }
   }
-  std::vector<Edge> spanning_tree(cheapestEdgeSize, Edge(-1, -1, std::numeric_limits<int>::max()));
-  
-  int key = 0;
-  for (const s21::Edge& edge : cheapestEdge) {
-    if(edge.from == -1) {
-      continue;
+
+  // std::cout << "Path: ";
+  // for (auto& elem : visited) {
+  //   std::cout << elem << " ";
+  // }
+  // std::cout << std::endl;
+  return visited;
+}
+
+std::vector<size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph, size_t start_vertex)  {
+  std::vector<size_t> way;
+  std::vector<size_t> visited;
+  s21::queue<size_t> myQueue;
+  visited.push_back(start_vertex);
+  myQueue.push(start_vertex);
+  while (!myQueue.empty()) {
+    for (size_t i = 1; i <= graph.GetSize(); i++) {
+      size_t edge = graph.GetMatrix()[myQueue.front() - 1][i - 1];
+      if ((edge) && (!hasElement(visited, i))) {
+        myQueue.push(i);
+        visited.push_back(i);
+      }
     }
-    spanning_tree.at(key) = edge;
-    key++;
+    way.push_back(myQueue.front());
+    myQueue.pop();
   }
 
-  return spanning_tree;
+  return visited;
 }
 
- 
-}
+
+
+
+} // namespace s21

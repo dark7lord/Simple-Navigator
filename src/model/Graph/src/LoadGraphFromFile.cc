@@ -29,6 +29,10 @@ static void ReadMatrixElements(std::ifstream& file, Matrix& matrix, size_t& size
 
     size_t element;
     while (iss >> element) {
+      if ((int) element < 0) {
+        file.close();
+        throw ParsingErrorException("Negative numbers are not allowed", i);
+      }
       row.push_back(element);
     }
 

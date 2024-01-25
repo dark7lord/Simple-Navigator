@@ -1,27 +1,45 @@
-NAME			:= s21_graph.a
+NAME			:=	s21_graph.a
 
-CC				:= g++
-CCFLAGS			:= -g -Wall -Wextra -Werror -std=c++17
-LDFLAGS			:= -lgtest
+CC				:=	g++
+CCFLAGS			:=	-Wall -Wextra -Werror -std=c++17
+LDFLAGS			:=	-lgtest
+TEST_FLAGS		:=	$(CXXFLAGS) --coverage -fprofile-arcs -ftest-coverage
+GTEST_LIBS		:=	-lgtest -lgtest_main -pthread
 
-SRC_DIR			:= src/
-OBJ_DIR			:= obj/
-INC_DIR			:= inc/
-TEST_DIR		:= tests/
+SRC_DIR			:=	src/
+OBJ_DIR			:=	obj/
+INC_DIR			:=	inc/
+TEST_DIR		:=	tests/
+REPORT_DIR		:=	report/
+TEST_TEMP_DIR	:=	test_tmp/
 
-SRC_FILES		:= s21_graph.cc LoadGraphFromFile.cc ExportGraphToDot.cc
-OBJ_FILES		:= $(SRC_FILES:.cc=.o)
-INC_FILES		:= GraphExceptions.h
-HEADER			:= s21_graph.h
-TEST_FILES		:= run_tests.cc LoadGraphFromFile_test.cc ExportGraphToDot_test.cc
-TEST_EXE		:= tests.exe
+TEMP_DIRS		:=	$(OBJ_DIR) \
+					$(TEST_TEMP_DIR) \
+					$(REPORT_DIR)
 
-SRC				:= $(addprefix $(SRC_DIR), $(SRC_FILES))
-OBJ				:= $(addprefix $(OBJ_DIR), $(OBJ_FILES))
-INC				:= $(addprefix $(INC_DIR), $(INC_FILES)) $(HEADER)
-TEST			:= $(addprefix $(TEST_DIR), $(TEST_FILES))
+SRC_FILES		:=	s21_graph.cc \
+					LoadGraphFromFile.cc \
+					ExportGraphToDot.cc
 
-.PHONY: all clean re test $(NAME)
+OBJ_FILES		:=	$(SRC_FILES:.cc=.o)
+INC_FILES		:=	GraphExceptions.h
+HEADER			:=	s21_graph.h
+
+TEST_FILES		:=	run_tests.cc \
+					LoadGraphFromFile_test.cc \
+					ExportGraphToDot_test.cc
+
+TEST_EXE		:=	tests.exe
+
+SRC				:=	$(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ				:=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
+INC				:=	$(addprefix $(INC_DIR), $(INC_FILES)) $(HEADER)
+TEST			:=	$(addprefix $(TEST_DIR), $(TEST_FILES))
+
+TEST_TMP_FILES	:=	$(TEST:$(TEST_DIR)%.cc=$(TEST_TEMP_DIR)%.o) \
+					$(SRC:$(SRC_DIR)%.cc=$(TEST_TEMP_DIR)%.o)
+
+.PHONY: all clean re test $(NAME) coverage
 
 all: $(NAME)
 
@@ -29,18 +47,41 @@ $(NAME): $(OBJ)
 	@ar rcs $(NAME) $(OBJ)
 	@echo Compiling $(NAME) success!
 
-$(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC)
-	@mkdir -p $(OBJ_DIR)
+$(TEMP_DIRS):
+	mkdir -p $@
+
+$(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC) | $(OBJ_DIR)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
-test: all
-	@$(CC) $(CCFLAGS) $(TEST) $(NAME)  -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
-	./$(TEST_DIR)$(TEST_EXE) || true
-# leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE) #если добавить -fsanitize=address, то ликов нет
-	rm -f $(TEST_DIR)$(TEST_EXE) $(TEST_DIR)files/*.tmp.dot
+$(TEST_TEMP_DIR)%.o: $(SRC_DIR)%.cc | $(TEST_TEMP_DIR)
+	$(CC) $(TEST_FLAGS) -c $< -o $@
+
+$(TEST_TEMP_DIR)%.o: $(TEST_DIR)%.cc | $(TEST_TEMP_DIR)
+	$(CC) $(CCFLAGS) -c $< -o $@
+
+test: all $(TEST_TMP_FILES) | $(TEST_TEMP_DIR)
+	@$(CC) $(TEST_FLAGS) $(GTEST_LIBS) $(TEST_TMP_FILES) -o $(TEST_TEMP_DIR)test.exe
+	@$(TEST_TEMP_DIR)test.exe
+	@rm -f $(TEST_DIR)files/*.tmp.dot
+
+coverage: test | $(REPORT_DIR)
+	@lcov -t "coverage" \
+		--output-file $(REPORT_DIR)coverage.info \
+		--capture \
+		--ignore-errors mismatch \
+		--quiet \
+		--directory $(TEST_TEMP_DIR)
+		-o coverage.info
+
+	@genhtml -o $(REPORT_DIR) $(REPORT_DIR)coverage.info \
+		--quiet \
+		--exclude "*/usr/include/*" \
+		--exclude "10.3.0*"\
+		 && echo "...Compiling report.html"
+	@open $(REPORT_DIR)/index.html && echo "...Opening report.html"
 
 clean:
-	@rm -rf $(OBJ_DIR) $(NAME)
+	rm -rf $(TEMP_DIRS) $(NAME)
 	@echo Cleaning success!
 
 re: clean all
