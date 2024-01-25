@@ -17,7 +17,7 @@ public:
   GraphAlgorithms() {};
   ~GraphAlgorithms() {};
 
-  void DepthFirstSearch(Graph &graph, int start_vertex);
+  std::vector<size_t> DepthFirstSearch(Graph &graph, int start_vertex);
   std::vector<size_t> BreadthFirstSearch(Graph &graph, size_t start_vertex);
 
   Matrix GetShortestPathsBetweenAllVertices(Graph &graph);

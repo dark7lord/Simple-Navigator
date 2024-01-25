@@ -13,20 +13,20 @@ TEST_DIR		:=	tests/
 REPORT_DIR		:=	report/
 TEST_TEMP_DIR	:=	test_tmp/
 
-TEMP_DIRS		:=	$(OBJ_DIR)\
-					$(TEST_TEMP_DIR)\
+TEMP_DIRS		:=	$(OBJ_DIR) \
+					$(TEST_TEMP_DIR) \
 					$(REPORT_DIR)
 
-SRC_FILES		:=	s21_graph.cc\
-					LoadGraphFromFile.cc\
+SRC_FILES		:=	s21_graph.cc \
+					LoadGraphFromFile.cc \
 					ExportGraphToDot.cc
 
 OBJ_FILES		:=	$(SRC_FILES:.cc=.o)
 INC_FILES		:=	GraphExceptions.h
 HEADER			:=	s21_graph.h
 
-TEST_FILES		:=	run_tests.cc\
-					LoadGraphFromFile_test.cc\
+TEST_FILES		:=	run_tests.cc \
+					LoadGraphFromFile_test.cc \
 					ExportGraphToDot_test.cc
 
 TEST_EXE		:=	tests.exe
@@ -39,7 +39,7 @@ TEST			:=	$(addprefix $(TEST_DIR), $(TEST_FILES))
 TEST_TMP_FILES	:=	$(TEST:$(TEST_DIR)%.cc=$(TEST_TEMP_DIR)%.o) \
 					$(SRC:$(SRC_DIR)%.cc=$(TEST_TEMP_DIR)%.o)
 
-.PHONY: all clean re test $(NAME) gcov_report
+.PHONY: all clean re test $(NAME) coverage
 
 all: $(NAME)
 
@@ -60,7 +60,7 @@ $(TEST_TEMP_DIR)%.o: $(TEST_DIR)%.cc | $(TEST_TEMP_DIR)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 test: all $(TEST_TMP_FILES) | $(TEST_TEMP_DIR)
-	@$(CC) $(CCFLAGS) $(TEST_FLAGS) $(GTEST_LIBS) $(TEST_TMP_FILES) -o $(TEST_TEMP_DIR)test.exe
+	@$(CC) $(TEST_FLAGS) $(GTEST_LIBS) $(TEST_TMP_FILES) -o $(TEST_TEMP_DIR)test.exe
 	@$(TEST_TEMP_DIR)test.exe
 	@rm -f $(TEST_DIR)files/*.tmp.dot
 
