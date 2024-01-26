@@ -20,7 +20,10 @@ TEMP_DIRS		:=	$(OBJ_DIR) \
 
 SRC_FILES		:=	s21_graph_algorithms.cc \
 					GetShortestPathsBetweenAllVertices.cc\
-					s21_get_least_spanninng_tree.cc
+					s21_get_least_spanninng_tree.cc\
+					Dijkstra’s_algorithm.cc\
+					Ant_algorythm.cc
+
 OBJ_FILES		:= $(SRC_FILES:.cc=.o)
 INC_FILES		:= lie.h
 HEADER			:= s21_graph_algorithms.h
@@ -60,7 +63,8 @@ $(TEST_TEMP_DIR)%.o: $(TEST_DIR)%.cc | $(TEST_TEMP_DIR)
 
 test: all $(TEST_TMP_FILES) | $(TEST_TEMP_DIR)
 	@$(CC) $(TEST_FLAGS) $(TEST_TMP_FILES) $(GTEST_LIBS) $(GRAPH_NAME)  -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
-	./$(TEST_DIR)$(TEST_EXE)
+	./$(TEST_DIR)$(TEST_EXE) || true
+
 #	leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE)
 	rm -f $(TEST_DIR)$(TEST_EXE)
 

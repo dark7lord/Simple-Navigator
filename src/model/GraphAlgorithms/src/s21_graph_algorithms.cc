@@ -3,7 +3,7 @@
 
 namespace s21 {
 
-static bool hasElement(std::vector<size_t> visited, size_t elem) {
+bool HasElement(std::vector<size_t> visited, size_t elem) {
   for (size_t i = 0; i < visited.size(); i++) {
     if (visited[i] == elem) return true;
   }
@@ -22,24 +22,19 @@ std::vector<size_t> GraphAlgorithms::DepthFirstSearch(Graph& graph, int start_ve
     size_t current = myStack.top();
     myStack.pop();
 
-    if (!hasElement(visited, current)) {
+    if (!HasElement(visited, current)) {
       visited.push_back(current);
 
       for (size_t i = size_graph; i > 0; --i) {
         bool hasPath = matrix[current - 1][i - 1] != 0;
 
-        if (hasPath && !hasElement(visited, i)) {
+        if (hasPath && !HasElement(visited, i)) {
           myStack.push(i);
         }
       }
     }
   }
 
-  // std::cout << "Path: ";
-  // for (auto& elem : visited) {
-  //   std::cout << elem << " ";
-  // }
-  // std::cout << std::endl;
   return visited;
 }
 
@@ -52,7 +47,7 @@ std::vector<size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph, size_t sta
   while (!myQueue.empty()) {
     for (size_t i = 1; i <= graph.GetSize(); i++) {
       size_t edge = graph.GetMatrix()[myQueue.front() - 1][i - 1];
-      if ((edge) && (!hasElement(visited, i))) {
+      if ((edge) && (!HasElement(visited, i))) {
         myQueue.push(i);
         visited.push_back(i);
       }
@@ -63,8 +58,5 @@ std::vector<size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph, size_t sta
 
   return visited;
 }
-
-
-
 
 } // namespace s21
