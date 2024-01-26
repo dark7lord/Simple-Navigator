@@ -188,12 +188,12 @@ private:
   // TODO: нужно дописать
   // нужно возвращать матрицу
   void GetLeastSpanningTree() {
-    // GraphAlgorithms alg;
+    GraphAlgorithms alg;
     std::cout << ">_<"<< std::endl;
 
-    // Matrix matrix = alg.GetLeastSpanningTree(graph_);
-    // std::cout << "\nMatrix of least spanning tree of the graph:\n" << std::endl;
-    // PrintMatrix(matrix);
+    Matrix matrix = alg.GetLeastSpanningTree(graph_);
+    std::cout << "\nMatrix of least spanning tree of the graph:\n" << std::endl;
+    PrintMatrix(matrix);
   }
 
   // TODO: Нужно убрать отладочную консольную печать

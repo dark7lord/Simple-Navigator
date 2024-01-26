@@ -37,7 +37,7 @@ public:
 
   std::vector<size_t> DepthFirstSearch(Graph &graph, int start_vertex);
   std::vector<size_t> BreadthFirstSearch(Graph &graph, size_t start_vertex);
-  std::vector<Edge> GetLeastSpanningTree(const Matrix& graph);
+  Matrix GetLeastSpanningTree(Graph& graph);
   Matrix GetShortestPathsBetweenAllVertices(Graph &graph);
   int GetShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2);
   AntWay SolveTravelingSalesmanProblem(Graph &graph);

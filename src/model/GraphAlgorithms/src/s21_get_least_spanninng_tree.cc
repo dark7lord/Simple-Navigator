@@ -9,9 +9,12 @@ void GraphAlgorithms::Print(std::set<unsigned> &set) {
   }
 }
 
-std::vector<Edge> GraphAlgorithms::GetLeastSpanningTree(const Matrix& graph) {
-  size_t numVertices = graph.size();
+Matrix GraphAlgorithms::GetLeastSpanningTree(Graph& graph) {
+  size_t numVertices = graph.GetSize();
+  Matrix origin_matrix = graph.GetMatrix();
   size_t cheapestEdgeSize = numVertices - 1; 
+  //s21::Matrix matrix = std::vector<std::vector<size_t>>;
+  Matrix matrix(numVertices, std::vector<size_t>(numVertices, 0));
 
   std::vector<size_t> cheapestCost(numVertices, std::numeric_limits<size_t>::max());
   std::vector<Edge> cheapestEdge(numVertices, Edge(-1, -1, std::numeric_limits<int>::max()));
@@ -28,12 +31,12 @@ std::vector<Edge> GraphAlgorithms::GetLeastSpanningTree(const Matrix& graph) {
     }
     inTree[currentVertex] = true;
     for (size_t neighbor = 0; neighbor < numVertices; ++neighbor) {
-      if (graph[currentVertex][neighbor] > 0 
+      if (origin_matrix[currentVertex][neighbor] > 0 
           && !inTree[neighbor] 
-          && graph[currentVertex][neighbor] < cheapestCost[neighbor]
+          && origin_matrix[currentVertex][neighbor] < cheapestCost[neighbor]
       ) {
-        cheapestCost[neighbor] = graph[currentVertex][neighbor];
-        cheapestEdge.at(neighbor) = Edge(currentVertex, neighbor, graph[currentVertex][neighbor]);
+        cheapestCost[neighbor] = origin_matrix[currentVertex][neighbor];
+        cheapestEdge.at(neighbor) = Edge(currentVertex, neighbor, origin_matrix[currentVertex][neighbor]);
       }
     }
   }
@@ -48,8 +51,13 @@ std::vector<Edge> GraphAlgorithms::GetLeastSpanningTree(const Matrix& graph) {
     key++;
   }
 
-  return spanning_tree;
+  for (auto& [from, to, weight] : spanning_tree) {
+    matrix[from][to] = weight;
+  }
+
+  //PrintMatrix(matrix);
+
+  return matrix;
 }
 
- 
 }
