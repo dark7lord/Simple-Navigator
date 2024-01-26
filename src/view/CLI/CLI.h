@@ -8,7 +8,6 @@
 
 namespace s21 {
 
-
 class CLI {
 
 public:
@@ -34,12 +33,12 @@ private:
   };
 
   void UploadGraph() {
-    std::cout << "Enter file name: " ;
+    std::cout << "Enter file name: ";
     std::string file_name;
 
     if (!(std::cin >> file_name)) {
-      std::cin.clear();  // Очистить флаг ошибки
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Очистить буфер
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
       if (std::cin.eof()) {
         current_state_ = State::Exit;
         std::cerr << "Ctrl+D (Exit)" << std::endl;
@@ -87,7 +86,7 @@ private:
   void BFS() {
     GraphAlgorithms alg;
 
-    std::cerr << "Enter starting vertex (BFS): ";
+    std::cout << "Enter starting vertex (BFS): ";
     int start_vertex;
     if (!(std::cin >> start_vertex)) {
       std::cin.clear();
@@ -146,10 +145,36 @@ private:
     std::cout << std::endl;
   }
 
-  // TODO: нужно дописать
-  // ну допустим там вектор вершин
   void GetShortestPathBetweenVertices() {
-    std::cout << "\nThere will soon be an implementation of Dijkstra's method\n" << std::endl;
+    GraphAlgorithms alg;
+
+    std::cout << "Enter start and finish vertices (Dijkstra): ";
+    int start_vertex;
+    int finish_vertex;
+    // TODO: работает не так, как нужно если ввести типа "1 3 4" и 4 уходит в горизонт другой логики
+    if (!(std::cin >> start_vertex >> finish_vertex)) {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+      if (std::cin.eof()) {
+        current_state_ = State::Exit;
+        std::cerr << "Ctrl+D (Exit)" << std::endl;
+        return;
+      }
+      std::cerr << "Invalid input. Please enter a number." << std::endl;
+      return;
+    }
+
+    if (start_vertex <= 0 || finish_vertex <= 0 ||
+      start_vertex > (int) graph_.GetSize() ||
+      finish_vertex > (int) graph_.GetSize()) {
+      std::cerr << "Vertex selection error." << std::endl;
+      return;
+    }
+
+    auto result = alg.GetShortestPathBetweenVertices(graph_, start_vertex, finish_vertex);
+    std::cout << "The shortest path between point "
+      << start_vertex << " and "<< finish_vertex<< " is "
+      << result << std::endl;
   }
 
   void GetShortestPathsBetweenAllVertices() {
@@ -163,15 +188,39 @@ private:
   // TODO: нужно дописать
   // нужно возвращать матрицу
   void GetLeastSpanningTree() {
-    GraphAlgorithms alg;
+    // GraphAlgorithms alg;
+    std::cout << ">_<"<< std::endl;
 
-    Matrix matrix = alg.GetShortestPathsBetweenAllVertices(graph_);
-    std::cout << "\nMatrix of shortest paths between all vertices of the graph:\n" << std::endl;
-    PrintMatrix(matrix);
+    // Matrix matrix = alg.GetLeastSpanningTree(graph_);
+    // std::cout << "\nMatrix of least spanning tree of the graph:\n" << std::endl;
+    // PrintMatrix(matrix);
   }
 
+  // TODO: Нужно убрать отладочную консольную печать
   void SolveTravelingSalesmanProblem() {
+    GraphAlgorithms alg;
 
+    // try {
+      AntWay ant_way = alg.SolveTravelingSalesmanProblem(graph_);
+      std::vector<size_t> vertices = ant_way.vertices;
+      double distance = ant_way.distance;
+
+      // TODO: Is it OK?
+      if (vertices.size() == 0) {
+        std::cerr << "There is no way" << std::endl;
+        return;
+      }
+
+      std::cout << "Path: ";
+      for (auto& vertex : vertices) {
+        std::cout << vertex << " ";
+      }
+      std::cout << std::endl;
+      std::cout << "Distance: " << distance << std::endl;
+
+    // } catch (const s21::GraphException& e) {
+    //   std::cout << e.what() << std::endl;
+    // }
   }
 
   void displayMenu() {
@@ -275,26 +324,32 @@ private:
   std::vector<std::pair<std::string, std::function<void()>>> loadedGraphOptions_{
     { "Load Graph", [this]() { UploadGraph(); } },
     { "Export", [this]() { Export(); } },
-    { "Print", [this]() { graph_.PrintGraph(); } },
-    { "Print in browser", [this]() { graph_.PrintGraphInBrowser(); } },
     { "Breadth First Search", [this]() { BFS(); } },
     { "Deep First Search", [this]() { DFS(); } },
+    { "Get shortest path between vertices", [this]() {
+      GetShortestPathBetweenVertices();
+    }},
     { "Get shortest paths between all vertices", [this]() {
       GetShortestPathsBetweenAllVertices();
     }},
-    { "Ant", [this]() {
-      // AntMthod();
+    { "Get least spanning tree", [this]() {
+      GetLeastSpanningTree();
+    }},
+    { "Solve traveling salesman problem", [this]() {
+      SolveTravelingSalesmanProblem();
+    }},
+    { "Print (adjacency matrix)", [this]() { graph_.PrintGraph(); } },
+    { "Print in browser (graph)", [this]() {
+      graph_.PrintGraphInBrowser();
     }},
     { "Exit", [this]() { current_state_ = (State::Exit); } }
   };
 
 private:
   CLI() {
-    // std::cout << "Console Line Interface created" << std::endl;
     current_state_ = State::EmptyGraph;
   };
   ~CLI() {
-    // std::cout << "Console Line Interface destroyed" << std::endl;
     current_state_ = State::EmptyGraph;
   };
 

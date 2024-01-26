@@ -1,7 +1,7 @@
 NAME:= main
 
 CC				:= g++
-CCFLAGS			:= -g -Wall -Wextra -Werror -std=c++17
+CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
 
 ALGS_NAME		:= s21_graph_algorithms.a
 ALGS_PATH		:= model/GraphAlgorithms
