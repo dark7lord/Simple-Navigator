@@ -1,38 +1,45 @@
 #include <gtest/gtest.h>
 #include "../s21_graph_algorithms.h"
 
-// TEST(tempTest, sum) {
-//   ASSERT_EQ(1 + 1, 2);
-// }
+TEST(GraphAlgorithmsTest, GetLeastSpanningTree_PositiveCase) {
 
-
-//GetLeastSpanningTree
-TEST(GraphAlgorithmsTest, GetLeastSpanningTree) {
-  s21::Matrix matrix_graph = {
-      {0, 2, 0, 6, 0},
-      {2, 0, 3, 8, 5},
-      {0, 3, 0, 0, 7},
-      {6, 8, 0, 0, 9},
-      {0, 5, 7, 9, 0}
-  };
-
-  std::vector<s21::Edge> expected = {
-      s21::Edge(0, 1, 2),
-      s21::Edge(1, 2, 3),
-      s21::Edge(0, 3, 6),
-      s21::Edge(1, 4, 5)
-  };
-  
   s21::Graph graph;
-  s21::GraphAlgorithms algorithms;
-  std::vector<s21::Edge> result = algorithms.GetLeastSpanningTree(matrix_graph);
+  graph.LoadGraphFromFile("/Users/madamkyl/A2_SimpleNavigator_v1.0-1/src/files/matrix_5x5.txt");
+  s21::GraphAlgorithms GA;
+  s21::Matrix matrix = graph.GetMatrix();
+  s21::Matrix minimumSpanningTree = GA.GetLeastSpanningTree(graph);
 
-  ASSERT_EQ(result.size(), expected.size());
-  for (size_t i = 0; i < result.size(); ++i) {
-    ASSERT_EQ(result[i].from, expected[i].from);
-    ASSERT_EQ(result[i].to, expected[i].to);
-    ASSERT_EQ(result[i].weight, expected[i].weight);
-  }
+  ASSERT_EQ(minimumSpanningTree.size(), 5);
+  ASSERT_EQ(minimumSpanningTree[0][0], 0);
+  ASSERT_EQ(minimumSpanningTree[0][1], 1);
+  ASSERT_EQ(minimumSpanningTree[0][2], 0);
+  ASSERT_EQ(minimumSpanningTree[0][3], 1);
+  ASSERT_EQ(minimumSpanningTree[0][4], 0);
+
+  ASSERT_EQ(minimumSpanningTree[1][0], 0);
+  ASSERT_EQ(minimumSpanningTree[1][1], 0);
+  ASSERT_EQ(minimumSpanningTree[1][2], 0);
+  ASSERT_EQ(minimumSpanningTree[1][3], 0);
+  ASSERT_EQ(minimumSpanningTree[1][4], 0);
+
+  ASSERT_EQ(minimumSpanningTree[2][0], 0);
+  ASSERT_EQ(minimumSpanningTree[2][1], 0);
+  ASSERT_EQ(minimumSpanningTree[2][2], 0);
+  ASSERT_EQ(minimumSpanningTree[2][3], 0);
+  ASSERT_EQ(minimumSpanningTree[2][4], 3);
+
+  ASSERT_EQ(minimumSpanningTree[3][0], 0);
+  ASSERT_EQ(minimumSpanningTree[3][1], 0);
+  ASSERT_EQ(minimumSpanningTree[3][2], 2);
+  ASSERT_EQ(minimumSpanningTree[3][3], 0);
+  ASSERT_EQ(minimumSpanningTree[3][4], 0);
+
+  ASSERT_EQ(minimumSpanningTree[4][0], 0);
+  ASSERT_EQ(minimumSpanningTree[4][1], 0);
+  ASSERT_EQ(minimumSpanningTree[4][2], 0);
+  ASSERT_EQ(minimumSpanningTree[4][3], 0);
+  ASSERT_EQ(minimumSpanningTree[4][4], 0);
+
 }
 
 // int main(int argc, char* argv[]) {
