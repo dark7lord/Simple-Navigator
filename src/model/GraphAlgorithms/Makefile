@@ -56,7 +56,7 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC) | $(OBJ_DIR)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 $(TEST_TEMP_DIR)%.o: $(SRC_DIR)%.cc | $(TEST_TEMP_DIR)
-	$(CC) $(TEST_FLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) $(TEST_FLAGS) -c $< -o $@
 
 $(TEST_TEMP_DIR)%.o: $(TEST_DIR)%.cc | $(TEST_TEMP_DIR)
 	$(CC) $(CCFLAGS) -c $< -o $@
@@ -74,17 +74,16 @@ coverage: test | $(REPORT_DIR)
 		--capture \
 		--ignore-errors mismatch \
 		--quiet \
-		--directory $(TEST_TEMP_DIR)\
-		-o coverage.info
+		--directory $(TEST_TEMP_DIR)
 
 	@genhtml -o $(REPORT_DIR) $(REPORT_DIR)coverage.info \
 		--quiet \
 		--exclude "10.3.0*"\
 		 && echo "...Compiling report.html"
-	@open $(REPORT_DIR)/index.html && echo "...Opening report.html"
+	open $(REPORT_DIR)index.html && echo "...Opening report.html"
 
 clean:
 	@rm -rf $(TEMP_DIRS) $(NAME)
 	@echo Cleaning success!
 
-re: clean all
+re: clean $(TEMP_DIRS) all

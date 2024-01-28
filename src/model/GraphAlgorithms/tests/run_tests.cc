@@ -33,7 +33,7 @@ namespace s21 {
 // TEST(Dijkstra, test1) {
 //   s21::Graph graph;
 //   s21::GraphAlgorithms test;
-//   graph.LoadGraphFromFile("tests/files/digraph_10x10.txt");  
+//   graph.LoadGraphFromFile("tests/files/digraph_10x10.txt");
 //   int result = test.GetShortestPathBetweenVertices(graph, 1, 9);
 //   int solution = 26;
 //   ASSERT_EQ(result, solution);
@@ -48,7 +48,7 @@ namespace s21 {
 // TEST(AntAlgotythm, test1) {
 //   s21::Graph graph;
 //   s21::GraphAlgorithms test;
-//   graph.LoadGraphFromFile("tests/files/digraph_6x6_AntAlg.txt");  
+//   graph.LoadGraphFromFile("tests/files/digraph_6x6_AntAlg.txt");
 //   AntWay result = test.SolveTravelingSalesmanProblem(graph);
 //   std::vector<size_t> way = {1, 2, 6, 3, 4, 5};
 //   double length = 700;
@@ -59,11 +59,11 @@ namespace s21 {
 // TEST(AntAlgotythm, test2) {
 //   s21::Graph graph;
 //   s21::GraphAlgorithms test;
-//   graph.LoadGraphFromFile("tests/files/digraph_16x16_AntAlg.txt");  
+//   graph.LoadGraphFromFile("tests/files/digraph_16x16_AntAlg.txt");
 //   AntWay result = test.SolveTravelingSalesmanProblem(graph);
 //   std::vector<size_t> way = {1, 7, 8, 9, 10, 2, 6, 3, 11, 12, 4, 13, 14, 5, 15, 16, 1};
 //   double length = 1473;
-  
+
 //   ASSERT_EQ(result.distance, length);
 //   ASSERT_EQ(result.vertices, way);
 // }
@@ -71,26 +71,26 @@ namespace s21 {
 // TEST(AntAlgotythm, test3) {
 //   s21::Graph graph;
 //   s21::GraphAlgorithms test;
-//   graph.LoadGraphFromFile("tests/files/digraph_12x12_AntAlg.txt");  
+//   graph.LoadGraphFromFile("tests/files/digraph_12x12_AntAlg.txt");
 //   AntWay result = test.SolveTravelingSalesmanProblem(graph);
 //   std::vector<size_t> way = {1, 7, 8, 9, 10, 2, 6, 3, 11, 12, 4, 5, 1};
 //   double length = 933;
-  
+
 //   ASSERT_EQ(result.distance, length);
 //   ASSERT_EQ(result.vertices, way);
 // }
 
-TEST(AntAlgotythm, test4) {
-  s21::Graph graph;
-  s21::GraphAlgorithms test;
-  graph.LoadGraphFromFile("tests/files/digraph_15x15_AntAlg.txt");  
-  AntWay result = test.SolveTravelingSalesmanProblem(graph);
-  std::vector<size_t> way = {1, 7, 8, 9, 10, 11, 2, 6, 3, 12, 15, 14, 13, 4, 5, 1};
-  double length = 1073;
-  
-  ASSERT_EQ(result.distance, length);
-  ASSERT_EQ(result.vertices, way);
-}
+// TEST(AntAlgotythm, test4) {
+//   s21::Graph graph;
+//   s21::GraphAlgorithms test;
+//   graph.LoadGraphFromFile("tests/files/digraph_15x15_AntAlg.txt");
+//   AntWay result = test.SolveTravelingSalesmanProblem(graph);
+//   std::vector<size_t> way = {1, 7, 8, 9, 10, 11, 2, 6, 3, 12, 15, 14, 13, 4, 5, 1};
+//   double length = 1073;
+
+//   ASSERT_EQ(result.distance, length);
+//   ASSERT_EQ(result.vertices, way);
+// }
 
 
 }

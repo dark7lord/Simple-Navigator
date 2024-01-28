@@ -84,4 +84,4 @@ clean:
 	rm -rf $(TEMP_DIRS) $(NAME)
 	@echo Cleaning success!
 
-re: clean all
+re: clean $(TEMP_DIRS) all
