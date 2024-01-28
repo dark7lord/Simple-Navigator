@@ -32,83 +32,96 @@ private:
     Exit
   };
 
-  void UploadGraph() {
-    std::cout << "Enter file name: ";
+  std::string inputFileName() {
     std::string file_name;
-
-    if (!(std::cin >> file_name)) {
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      if (std::cin.eof()) {
-        current_state_ = State::Exit;
-        std::cerr << "Ctrl+D (Exit)" << std::endl;
-        return;
-      }
-      if (file_name.empty()) {
+    while (true) {
+      std::cout << "Enter file name: ";
+      if (!(std::cin >> file_name)) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        if (std::cin.eof()) {
+          current_state_ = State::Exit;
+          std::cerr << "Ctrl+D (Exit)" << std::endl;
+          // break;
+          throw "Exit. Bye!";
+          // throw std::runtime_error("Ctrl+D (Exit)");
+        }
+        std::cerr << "Invalid input. Please enter a valid file name." << std::endl;
+      } else if (file_name.empty()) {
         std::cerr << "Error: empty string entered" << std::endl;
+      } else {
+        break;
       }
     }
+    return file_name;
+  }
 
+  int InputValue(const std::string& prompt, const std::string& errorMessage, const int& minValue, const int& maxValue) {
+    int value;
+    while (true) {
+      std::cout << prompt;
+      if (!(std::cin >> value)) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        if (std::cin.eof()) {
+          current_state_ = State::Exit;
+          std::cerr << std::endl << "Ctrl+D (Exit)" << std::endl;
+          throw "Exit. Bye!";
+        }
+        std::cerr << "Invalid input. Please enter a valid value." << std::endl;
+      } else if (value < minValue || value > maxValue) {
+        std::cerr << errorMessage << std::endl;
+      } else {
+        break;
+      }
+    }
+    return value;
+  }
+
+  void UploadGraph() {
     try {
+      std::string file_name = inputFileName();
       graph_.LoadGraphFromFile(file_name);
       this->current_state_ = State::LoadedGraph;
       std::cout << "Graph " << file_name <<  " is loaded!" << std::endl;
     } catch (const s21::GraphException& e) {
       std::cout << e.what() << std::endl;
+    } catch (char const* e) {
+      std::cerr << e << std::endl;
     }
   }
 
   void Export() {
-    std::cout << "Enter file name: " ;
-    std::string file_name;
-
-    if (!(std::cin >> file_name)) {
-      std::cin.clear();  // Очистить флаг ошибки
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');  // Очистить буфер
-      if (std::cin.eof()) {
-        current_state_ = State::Exit;
-        std::cerr << "Ctrl+D (Exit)" << std::endl;
-        return;
-      }
-      if (file_name.empty()) {
-        std::cerr << "Error: empty string entered" << std::endl;
-      }
-    }
-
     try {
+      std::string file_name = inputFileName();
       graph_.ExportGraphToDot(file_name);
       std::cout << "Graph " << file_name <<  " is exported!" << std::endl;
     } catch (const s21::GraphException& e) {
-      std::cout << e.what() << std::endl;
+      std::cerr << e.what() << std::endl;
+    } catch (char const* e) {
+      std::cerr << e << std::endl;
     }
   };
 
   void BFS() {
     GraphAlgorithms alg;
-
-    std::cout << "Enter starting vertex (BFS): ";
+    std::string prompt = "Enter starting vertex (BFS): ";
+    std::string error_message = "Vertex selection error.";
+    int min_value = 1;
+    int max_value = graph_.GetSize();
     int start_vertex;
-    if (!(std::cin >> start_vertex)) {
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      if (std::cin.eof()) {
-        current_state_ = State::Exit;
-        std::cerr << "Ctrl+D (Exit)" << std::endl;
-        return;
-      }
-      std::cerr << "Invalid input. Please enter a number." << std::endl;
-      return;
-    }
 
-    if (start_vertex <= 0 || start_vertex > (int) graph_.GetSize()) {
-      std::cerr << "Vertex selection error." << std::endl;
+    try {
+      start_vertex = InputValue(prompt, error_message, min_value, max_value);
+    } catch (char const* e) {
+      std::cerr << e << std::endl;
       return;
     }
 
     auto path = alg.BreadthFirstSearch(graph_, start_vertex);
 
     std::cout << "Path: ";
-    for (auto& elem : path) {
+    for (const auto& elem : path) {
       std::cout << elem << " ";
     }
     std::cout << std::endl;
@@ -116,23 +129,16 @@ private:
 
   void DFS() {
     GraphAlgorithms alg;
-
-    std::cerr << "Enter starting vertex (DFS): ";
+    std::string prompt = "Enter starting vertex (DFS): ";
+    std::string error_message = "Vertex selection error.";
+    int min_value = 1;
+    int max_value = graph_.GetSize();
     int start_vertex;
-    if (!(std::cin >> start_vertex)) {
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      if (std::cin.eof()) {
-        current_state_ = State::Exit;
-        std::cerr << "Ctrl+D (Exit)" << std::endl;
-        return;
-      }
-      std::cerr << "Invalid input. Please enter a number." << std::endl;
-      return;
-    }
 
-    if (start_vertex <= 0 || start_vertex > (int) graph_.GetSize()) {
-      std::cerr << "Vertex selection error." << std::endl;
+    try {
+      start_vertex = InputValue(prompt, error_message, min_value, max_value);
+    } catch (char const* e) {
+      std::cerr << e << std::endl;
       return;
     }
 
@@ -147,31 +153,27 @@ private:
 
   void GetShortestPathBetweenVertices() {
     GraphAlgorithms alg;
+    std::string prompt_start = "Enter starting vertex: ";
+    std::string prompt_finish = "Enter finish vertex: ";
+    std::string error_message = "Vertex selection error.";
+    int min_value = 1;
+    int max_value = graph_.GetSize();
 
-    std::cout << "Enter start and finish vertices (Dijkstra): ";
+    std::cout << "Enter start and finish vertices (Dijkstra)" << std::endl;
+
     int start_vertex;
     int finish_vertex;
-    // TODO: работает не так, как нужно если ввести типа "1 3 4" и 4 уходит в горизонт другой логики
-    if (!(std::cin >> start_vertex >> finish_vertex)) {
-      std::cin.clear();
-      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-      if (std::cin.eof()) {
-        current_state_ = State::Exit;
-        std::cerr << "Ctrl+D (Exit)" << std::endl;
-        return;
-      }
-      std::cerr << "Invalid input. Please enter a number." << std::endl;
-      return;
-    }
 
-    if (start_vertex <= 0 || finish_vertex <= 0 ||
-      start_vertex > (int) graph_.GetSize() ||
-      finish_vertex > (int) graph_.GetSize()) {
-      std::cerr << "Vertex selection error." << std::endl;
+    try {
+      start_vertex = InputValue(prompt_start, error_message, min_value, max_value);
+      finish_vertex = InputValue(prompt_finish, error_message, min_value, max_value);
+    } catch (char const* e) {
+      std::cerr << e << std::endl;
       return;
     }
 
     auto result = alg.GetShortestPathBetweenVertices(graph_, start_vertex, finish_vertex);
+
     std::cout << "The shortest path between point "
       << start_vertex << " and "<< finish_vertex<< " is "
       << result << std::endl;
@@ -182,11 +184,10 @@ private:
 
     Matrix matrix = alg.GetShortestPathsBetweenAllVertices(graph_);
     std::cout << "\nMatrix of shortest paths between all vertices of the graph:\n" << std::endl;
-    PrintMatrix(matrix);
+    // PrintMatrix(matrix);
+    std::cout << matrix;
   }
 
-  // TODO: нужно дописать
-  // нужно возвращать матрицу
   void GetLeastSpanningTree() {
     GraphAlgorithms alg;
     std::cout << ">_<"<< std::endl;
@@ -196,7 +197,6 @@ private:
     PrintMatrix(matrix);
   }
 
-  // TODO: Нужно убрать отладочную консольную печать
   void SolveTravelingSalesmanProblem() {
     GraphAlgorithms alg;
 

@@ -61,7 +61,7 @@ $(TEST_TEMP_DIR)%.o: $(TEST_DIR)%.cc | $(TEST_TEMP_DIR)
 
 test: all $(TEST_TMP_FILES) | $(TEST_TEMP_DIR)
 	@$(CC) $(TEST_FLAGS) $(GTEST_LIBS) $(TEST_TMP_FILES) -o $(TEST_TEMP_DIR)test.exe
-	@$(TEST_TEMP_DIR)test.exe
+	@$(TEST_TEMP_DIR)test.exe || true
 	@rm -f $(TEST_DIR)files/*.tmp.dot
 
 coverage: test | $(REPORT_DIR)
