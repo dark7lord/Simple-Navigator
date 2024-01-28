@@ -51,9 +51,13 @@ Matrix GraphAlgorithms::GetLeastSpanningTree(Graph& graph) {
     key++;
   }
 
-  for (auto& [from, to, weight] : spanning_tree) {
-    matrix[from][to] = weight;
-  }
+  // for (auto& [from, to, weight] : spanning_tree) {
+  //   matrix[from][to] = weight;
+  // }
+
+  for (const auto& [from, to, weight] : spanning_tree) {
+        matrix[from][to] = weight;
+    }
 
   //PrintMatrix(matrix);
 

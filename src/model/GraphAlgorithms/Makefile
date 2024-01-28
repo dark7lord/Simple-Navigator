@@ -27,9 +27,9 @@ SRC_FILES		:=	s21_graph_algorithms.cc \
 OBJ_FILES		:= $(SRC_FILES:.cc=.o)
 INC_FILES		:= lie.h
 HEADER			:= s21_graph_algorithms.h
-TEST_FILES		:=	run_tests.cc\
+TEST_FILES		:=	tests_get_least_spanning_tree.cc\
 					GetShortestPathsBetweenAllVertices_test.cc\
-					tests_get_least_spanning_tree.cc\
+					run_tests.cc\
 
 TEST_EXE		:= tests.exe
 
@@ -62,6 +62,7 @@ $(TEST_TEMP_DIR)%.o: $(TEST_DIR)%.cc | $(TEST_TEMP_DIR)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 test: all $(TEST_TMP_FILES) | $(TEST_TEMP_DIR)
+	@make -C ../Graph
 	@$(CC) $(TEST_FLAGS) $(TEST_TMP_FILES) $(GTEST_LIBS) $(GRAPH_NAME)  -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
 	./$(TEST_DIR)$(TEST_EXE) || true
 
