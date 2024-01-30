@@ -1,4 +1,5 @@
 #include "../s21_graph_algorithms.h"
+
 #include <iostream>
 
 namespace s21 {
@@ -10,8 +11,8 @@ bool HasElement(std::vector<size_t> visited, size_t elem) {
   return false;
 }
 
-
-std::vector<size_t> GraphAlgorithms::DepthFirstSearch(Graph& graph, int start_vertex) {
+std::vector<size_t> GraphAlgorithms::DepthFirstSearch(Graph& graph,
+                                                      int start_vertex) {
   std::vector<size_t> visited;
   s21::stack<size_t> myStack;
   Matrix matrix = graph.GetMatrix();
@@ -38,7 +39,8 @@ std::vector<size_t> GraphAlgorithms::DepthFirstSearch(Graph& graph, int start_ve
   return visited;
 }
 
-std::vector<size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph, size_t start_vertex)  {
+std::vector<size_t> GraphAlgorithms::BreadthFirstSearch(Graph& graph,
+                                                        size_t start_vertex) {
   std::vector<size_t> way;
   std::vector<size_t> visited;
   s21::queue<size_t> myQueue;
@@ -59,4 +61,4 @@ std::vector<size_t> GraphAlgorithms::BreadthFirstSearch(Graph &graph, size_t sta
   return visited;
 }
 
-} // namespace s21
+}  // namespace s21

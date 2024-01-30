@@ -29,7 +29,10 @@ INC_FILES		:= lie.h
 HEADER			:= s21_graph_algorithms.h
 TEST_FILES		:=	tests_get_least_spanning_tree.cc\
 					GetShortestPathsBetweenAllVertices_test.cc\
-# run_tests.cc\
+					AntAlg_tests.cc\
+					BFS_tests.cc\
+					Dijkstra_tests.cc\
+					run_tests.cc\
 
 TEST_EXE		:= tests.exe
 
