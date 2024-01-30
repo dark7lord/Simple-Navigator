@@ -11,6 +11,10 @@ GRAPHS_NAME		:= s21_graph.a
 GRAPHS_PATH		:= model/Graph
 GRAPHS			:= $(GRAPHS_PATH)/$(GRAPHS_NAME)
 
+CLI_NAME		:= s21_cli.a
+CLI_PATH		:= view/CLI
+CLI				:= $(CLI_PATH)/$(CLI_NAME)
+
 SRC				:= main.cc
 
 .PHONY: all run clean re test check_ext
@@ -20,18 +24,23 @@ all: check_ext $(NAME)
 check_ext:
 	@echo ...compiling $(GRAPHS_NAME) && make -C $(GRAPHS_PATH)
 	@echo ...compiling $(ALGS_NAME) && make -C $(ALGS_PATH)
+	@echo ...compiling $(CLI_NAME) && make -C $(CLI_PATH)
 
 run: all
 	./$(NAME)
 
-$(NAME): $(SRC) $(ALGS) $(GRAPHS)
-	$(CC) $(CCFLAGS) $(SRC) $(GRAPHS) $(ALGS) -o $(NAME)
+# $(NAME): $(SRC) $(ALGS) $(GRAPHS) $(CLI)
+$(NAME): $(SRC) check_ext
+	$(CC) $(CCFLAGS) $(SRC) $(GRAPHS) $(ALGS) $(CLI) -o $(NAME)
 
 $(GRAPHS):
 	@echo ...compiling $(GRAPHS_NAME) && make -C $(GRAPHS_PATH)
 
 $(ALGS):
 	@echo ...compiling $(ALGS_NAME) && make -C $(ALGS_PATH)
+
+$(CLI):
+	@echo ...compiling $(CLI_NAME) && make -C $(CLI_PATH)
 
 clean:
 	@rm -f $(NAME)

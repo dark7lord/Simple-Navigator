@@ -19,24 +19,27 @@ TEMP_DIRS		:=	$(OBJ_DIR) \
 					$(REPORT_DIR)
 
 SRC_FILES		:=	s21_graph_algorithms.cc \
-					GetShortestPathsBetweenAllVertices.cc\
-					s21_get_least_spanninng_tree.cc\
-					Dijkstra’s_algorithm.cc\
+					get_shortest_paths_between_all_vertices.cc \
+					s21_get_least_spanninng_tree.cc \
+					Dijkstra’s_algorithm.cc \
 					Ant_algorythm.cc
 
-OBJ_FILES		:= $(SRC_FILES:.cc=.o)
-INC_FILES		:= lie.h
-HEADER			:= s21_graph_algorithms.h
-TEST_FILES		:=	tests_get_least_spanning_tree.cc\
-					GetShortestPathsBetweenAllVertices_test.cc\
-					run_tests.cc\
+OBJ_FILES		:=	$(SRC_FILES:.cc=.o)
+INC_FILES		:=	lie.h
+HEADER			:=	s21_graph_algorithms.h
+TEST_FILES		:=	tests_get_least_spanning_tree.cc \
+					get_shortest_paths_between_all_vertices_test.cc \
+					AntAlg_tests.cc \
+					BFS_tests.cc \
+					Dijkstra_tests.cc \
+					run_tests.cc
 
-TEST_EXE		:= tests.exe
+TEST_EXE		:=	tests.exe
 
-SRC				:= $(addprefix $(SRC_DIR), $(SRC_FILES))
-OBJ				:= $(addprefix $(OBJ_DIR), $(OBJ_FILES))
-INC				:= $(addprefix $(INC_DIR), $(INC_FILES)) $(HEADER)
-TEST			:= $(addprefix $(TEST_DIR), $(TEST_FILES))
+SRC				:=	$(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ				:=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
+INC				:=	$(addprefix $(INC_DIR), $(INC_FILES)) $(HEADER)
+TEST			:=	$(addprefix $(TEST_DIR), $(TEST_FILES))
 
 TEST_TMP_FILES	:=	$(TEST:$(TEST_DIR)%.cc=$(TEST_TEMP_DIR)%.o) \
 					$(SRC:$(SRC_DIR)%.cc=$(TEST_TEMP_DIR)%.o)
@@ -88,3 +91,8 @@ clean:
 	@echo Cleaning success!
 
 re: clean $(TEMP_DIRS) all
+
+clang_n:
+	clang-format -style=Google -n src/*.cc inc/*.h *.h
+clang_i:
+	clang-format -style=Google -i src/*.cc inc/*.h *.h

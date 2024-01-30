@@ -17,7 +17,8 @@ static void ReadMatrixSize(std::ifstream& file, size_t& size_matrix) {
   }
 }
 
-static void ReadMatrixElements(std::ifstream& file, Matrix& matrix, size_t& size) {
+static void ReadMatrixElements(std::ifstream& file, Matrix& matrix,
+                               size_t& size) {
   SkipWhitespace(file);
 
   for (size_t i = 0; i < size; ++i) {
@@ -29,7 +30,7 @@ static void ReadMatrixElements(std::ifstream& file, Matrix& matrix, size_t& size
 
     size_t element;
     while (iss >> element) {
-      if ((int) element < 0) {
+      if ((int)element < 0) {
         file.close();
         throw ParsingErrorException("Negative numbers are not allowed", i);
       }
@@ -39,7 +40,8 @@ static void ReadMatrixElements(std::ifstream& file, Matrix& matrix, size_t& size
     if (row.size() != size) {
       file.close();
       throw MatrixSizeMismatchException(
-          "Number of elements in a row does not match the specified matrix size");
+          "Number of elements in a row does not match the specified matrix "
+          "size");
     }
 
     matrix[i] = row;

@@ -1,30 +1,110 @@
 #include "../cli.h"
 
-// void LoadGraphFromFile(const std::string& filename);
-// LoadGraphFromFile("files/digraph_5x5.txt");
-// // if graph loaded
-//   // void ExportGraphToDot(const std::string& filename);
-//   ExportGraphToDot("test_example_graph"); // загрузка исходного графа из файла
-//   // graph.ExportGraphToDot("test_example_graph");
+namespace s21 {
 
-//   DepthFirstSearch(Graph &graph, int start_vertex); // обход графа в глубину с выводом результата обхода в консоль
-//   BreadthFirstSearch(Graph &graph, int start_vertex); //обход графа в ширину с выводом результата обхода в консоль
+CLI& CLI::getInstance() {
+  static CLI instance;
+  return instance;
+}
 
-//   GetShortestPathBetweenVertices(Graph &graph, int vertex1, int vertex2); // поиск кратчайшего пути между произвольными двумя вершинами с выводом результата в консоль
-//   GetShortestPathsBetweenAllVertices(Graph &graph); // поиск кратчайших путей между всеми парами вершин в графе с выводом результирующей матрицы в консоль
-//   GetLeastSpanningTree(Graph &graph); // поиск минимального остовного дерева в графе с выводом результирующей матрицы смежности в консоль
+Graph& CLI::getGraph() { return graph_; }
 
-//   SolveTravelingSalesmanProblem(Graph &graph); //  решение задачи комивояжера с выводом результирующего маршрута и его длины в консоль
+void CLI::start() {
+  while (current_state_ != State::Exit) {
+    displayMenu();
+    processInput();
+  }
+}
 
-//   // my methods
-//   PrintGraphInBrowser();
-//   PrintGraph();
+void CLI::displayMenu() {
+  // int i = 0;
+  std::cout << std::endl;
+  std::cout << "Select a command to execute: " << std::endl;
+  switch (current_state_) {
+    case State::EmptyGraph:
+      displayOptions(emptyGraphOptions_);
+      break;
+    case State::LoadedGraph:
+      displayOptions(loadedGraphOptions_);
+      break;
+    default:
+      break;
+  }
 
+  std::cout << std::endl << "Enter your choice: ";
+}
 
+void CLI::processInput() {
+  int choice;
+  if (!(std::cin >> choice)) {
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    if (std::cin.eof()) {
+      current_state_ = State::Exit;
+      std::cerr << "Ctrl+D (Exit)" << std::endl;
+      return;
+    }
+    std::cerr << "Invalid input. Please enter a number." << std::endl;
+    return;
+  }
 
+  std::vector<std::pair<std::string, std::function<void()>>> options;
+  switch (current_state_) {
+    case State::EmptyGraph:
+      options = emptyGraphOptions_;
+      break;
+    case State::LoadedGraph:
+      options = loadedGraphOptions_;
+      break;
+    default:
+      break;
+  }
 
+  if (choice >= 1 && static_cast<size_t>(choice) <= options.size()) {
+    options[choice - 1].second();
+  } else {
+    std::cout << "Invalid choice. Please try again.\n";
+  }
+}
 
+void CLI::ProcessEmptyGraphState(int choice) {
+  switch (choice) {
+    case 1:
+      std::cout << "Graph loaded!\n";
+      current_state_ = State::LoadedGraph;
+      break;
+    case 2:
+      std::cout << "Exiting...\n";
+      current_state_ = State::Exit;
+      break;
+    default:
+      std::cout << "Invalid choice. Try again.\n";
+      break;
+  }
+}
 
+void CLI::processLoadedGraphState(int choice) {
+  switch (choice) {
+    case 1:
+      std::cout << "Graph unloaded.\n";
+      current_state_ = State::EmptyGraph;
+      break;
+    case 2:
+      std::cout << "Exiting...\n";
+      current_state_ = State::Exit;
+      break;
+    default:
+      std::cout << "Invalid choice. Try again.\n";
+      break;
+  }
+}
 
+void CLI::displayOptions(
+    const std::vector<std::pair<std::string, std::function<void()>>>& options) {
+  int i = 0;
+  for (const auto& option : options) {
+    std::cout << ++i << ". " << option.first << std::endl;
+  }
+}
 
-
+}  // namespace s21

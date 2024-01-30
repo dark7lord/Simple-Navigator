@@ -2,7 +2,8 @@
 
 namespace s21 {
 
-// static std::vector<size_t> GetShortestPathVertices(const Matrix& next, size_t start, size_t finish) {
+// static std::vector<size_t> GetShortestPathVertices(const Matrix& next, size_t
+// start, size_t finish) {
 //   std::vector<size_t> path;
 //   size_t infinity = -1;
 //   for (size_t v = start - 1;
@@ -60,7 +61,8 @@ Matrix GraphAlgorithms::GetShortestPathsBetweenAllVertices(Graph& graph) {
         size_t middle_dest = distance_matrix[middle][dest];
         size_t weight = src_middle + middle_dest;
 
-        if (src_middle != infinity && middle_dest != infinity &&  weight < src_dest) {
+        if (src_middle != infinity && middle_dest != infinity &&
+            weight < src_dest) {
           distance_matrix[src][dest] = weight;
           // next[src][dest] = next[src][middle];
         }
@@ -75,4 +77,4 @@ Matrix GraphAlgorithms::GetShortestPathsBetweenAllVertices(Graph& graph) {
   return distance_matrix;
 }
 
-} // namespace s21
+}  // namespace s21

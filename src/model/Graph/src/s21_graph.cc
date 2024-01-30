@@ -9,7 +9,9 @@ void PrintMatrix(const Matrix& matrix) {
   std::cout << " ";
   for (size_t k = 1; k <= size; ++k) std::cout << "\t" << k;
   std::cout << std::endl;
-  for (size_t k = 0; k <= size; ++k) std::cout << " "<< "\t";
+  for (size_t k = 0; k <= size; ++k)
+    std::cout << " "
+              << "\t";
   std::cout << std::endl;
 
   for (size_t i = 0; i < size; ++i) {
@@ -24,13 +26,11 @@ void PrintMatrix(const Matrix& matrix) {
   std::cout << std::endl;
 }
 
-void Graph::PrintGraph() const{
-  PrintMatrix(matrix_);
-}
+void Graph::PrintGraph() const { PrintMatrix(matrix_); }
 
 std::ostream& operator<<(std::ostream& os, const Matrix& matrix) {
   PrintMatrix(matrix);
   return os;
 }
 
-} // namespace s21
+}  // namespace s21

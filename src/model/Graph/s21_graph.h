@@ -1,12 +1,12 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
-#include <sstream>
-#include <iomanip>
 
 #include "inc/GraphExceptions.h"
 
@@ -16,9 +16,9 @@ using Matrix = std::vector<std::vector<size_t>>;
 using size_t = std::size_t;
 
 class Graph {
-public:
-  Graph(): size_matrix_(0) {};
-  ~Graph() {};
+ public:
+  Graph() : size_matrix_(0){};
+  ~Graph(){};
 
   void LoadGraphFromFile(const std::string& filename);
   void ExportGraphToDot(const std::string& filename);
@@ -28,7 +28,7 @@ public:
   Matrix GetMatrix() const { return matrix_; }
   bool is_digraph = false;
 
-private:
+ private:
   Matrix matrix_;
   size_t size_matrix_;
 
@@ -38,5 +38,5 @@ private:
 void PrintMatrix(const Matrix& matrix);
 std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 
-}
+}  // namespace s21
 #endif
