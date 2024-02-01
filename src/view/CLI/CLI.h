@@ -40,6 +40,11 @@ class CLI {
   void ProcessEmptyGraphState(int choice);
   void processLoadedGraphState(int choice);
 
+  // Prints
+  void PrintGraphInBrowser(const Graph& graph);
+  void PrintMatrix(const Matrix& matrix);
+  // std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
+
  private:
   State current_state_;
 
@@ -64,9 +69,9 @@ class CLI {
           {"Get least spanning tree", [this]() { GetLeastSpanningTree(); }},
           {"Solve traveling salesman problem",
            [this]() { SolveTravelingSalesmanProblem(); }},
-          {"Print (adjacency matrix)", [this]() { graph_.PrintGraph(); }},
+          {"Print (adjacency matrix)", [this]() { PrintMatrix(graph_.GetMatrix()); }},
           {"Print in browser (graph)",
-           [this]() { graph_.PrintGraphInBrowser(); }},
+           [this]() { PrintGraphInBrowser(graph_); }},
           {"Exit", [this]() { current_state_ = (State::Exit); }}};
 
  private:

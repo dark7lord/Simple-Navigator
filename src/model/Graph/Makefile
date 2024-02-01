@@ -75,7 +75,6 @@ coverage: test | $(REPORT_DIR)
 
 	@genhtml -o $(REPORT_DIR) $(REPORT_DIR)coverage.info \
 		--quiet \
-		--exclude "*/usr/include/*" \
 		--exclude "10.3.0*"\
 		 && echo "...Compiling report.html"
 	@open $(REPORT_DIR)/index.html && echo "...Opening report.html"

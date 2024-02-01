@@ -9,9 +9,10 @@ OBJ_DIR			:=	obj/
 INC_DIR			:=	inc/
 
 SRC_FILES		:=	cli.cc \
-					inputs.cc \
 					files.cc \
-					algs_methods.cc
+					inputs.cc \
+					algs_methods.cc \
+					prints.cc
 
 
 OBJ_FILES		:=	$(SRC_FILES:.cc=.o)

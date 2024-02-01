@@ -22,21 +22,18 @@ class Graph {
 
   void LoadGraphFromFile(const std::string& filename);
   void ExportGraphToDot(const std::string& filename);
-  void PrintGraph() const;
-  void PrintGraphInBrowser();
+  // void PrintGraph() const;
+  // void PrintGraphInBrowser();
   size_t GetSize() const { return size_matrix_; }
   Matrix GetMatrix() const { return matrix_; }
+  const std::string ToString() const;
   bool is_digraph = false;
 
  private:
   Matrix matrix_;
   size_t size_matrix_;
 
-  const std::string ToString_() const;
 };
-
-void PrintMatrix(const Matrix& matrix);
-std::ostream& operator<<(std::ostream& os, const Matrix& matrix);
 
 }  // namespace s21
 #endif
