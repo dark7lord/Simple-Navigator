@@ -52,3 +52,10 @@ TEST_F(GraphFixture, MatrixSizeMismatchTest) {
     s21::MatrixSizeMismatchException
   );
 }
+
+TEST_F(GraphFixture, NegativeNumbersTest) {
+  ASSERT_THROW(
+    graph.LoadGraphFromFile("tests/files/negative_numbers.txt"),
+    s21::ParsingErrorException
+  );
+}

@@ -31,6 +31,7 @@ TEST_FILES		:=	tests_get_least_spanning_tree.cc \
 					get_shortest_paths_between_all_vertices_test.cc \
 					AntAlg_tests.cc \
 					BFS_tests.cc \
+					DFS_tests.cc \
 					Dijkstra_tests.cc \
 					run_tests.cc
 
@@ -83,6 +84,7 @@ coverage: test | $(REPORT_DIR)
 	@genhtml -o $(REPORT_DIR) $(REPORT_DIR)coverage.info \
 		--quiet \
 		--exclude "10.3.0*"\
+		--exclude "templates"\
 		 && echo "...Compiling report.html"
 	open $(REPORT_DIR)index.html && echo "...Opening report.html"
 

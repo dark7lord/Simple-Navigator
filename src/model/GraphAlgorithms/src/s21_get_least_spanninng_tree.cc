@@ -4,11 +4,11 @@
 
 namespace s21 {
 
-void GraphAlgorithms::Print(std::set<unsigned>& set) {
-  for (auto it = set.begin(); it != set.end(); it++) {
-    std::cout << *it << std::endl;
-  }
-}
+// void GraphAlgorithms::Print(std::set<unsigned>& set) {
+//   for (auto it = set.begin(); it != set.end(); it++) {
+//     std::cout << *it << std::endl;
+//   }
+// }
 
 Matrix GraphAlgorithms::GetLeastSpanningTree(Graph& graph) {
   size_t numVertices = graph.GetSize();

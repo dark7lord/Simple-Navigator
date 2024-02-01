@@ -18,3 +18,16 @@ TEST(Dijkstra, test1) {
   ASSERT_EQ(result, solution);
 }
 }  // namespace s21
+
+TEST(GraphAlgorithmsTest, InvalidVertices) {
+  s21::Graph graph;
+  graph.LoadGraphFromFile("tests/files/digraph_3x3.txt");
+
+  s21::GraphAlgorithms algorithms;
+
+  // Вершины 4 и 2 не существуют в графе 3x3, поэтому ожидаем исключение
+  ASSERT_THROW(
+    algorithms.GetShortestPathBetweenVertices(graph, 4, 2),
+    std::invalid_argument
+  );
+}

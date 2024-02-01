@@ -43,3 +43,9 @@ TEST(GraphTest, ExportGraphToDot) {
     "tests/files/graph_2x2_exported.tmp"
   );
 }
+
+TEST(GraphTest, ExportGraphToDotCantCreateFileException) {
+  s21::Graph graph;
+  ASSERT_NO_THROW(graph.LoadGraphFromFile("tests/files/graph_2x2.txt"));
+  EXPECT_THROW(graph.ExportGraphToDot("/invalid/path/graph.dot"), s21::CantCreateFileException);
+}
