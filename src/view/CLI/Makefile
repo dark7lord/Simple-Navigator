@@ -36,7 +36,7 @@ $(OBJ_DIR):
 	mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC) | $(OBJ_DIR)
-	$(CC) $(CCFLAGS) -c $< -o $@ -I $(HEADER)
+	$(CC) $(CCFLAGS) -c $< -o $@
 
 clean:
 	rm -rf obj $(NAME)

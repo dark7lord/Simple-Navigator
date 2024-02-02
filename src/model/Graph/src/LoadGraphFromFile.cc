@@ -47,10 +47,13 @@ static void ReadMatrixElements(std::ifstream& file, Matrix& matrix,
     matrix[i] = row;
   }
 
-  if (file.fail()) {
+  std::string extraLine;
+  std::getline(file, extraLine);
+
+  if (extraLine.find_first_not_of(" \t\n") != std::string::npos) {
     file.close();
     throw MatrixSizeMismatchException(
-        "Number of elements in a row does not match the specified matrix size");
+        "Extra non-whitespace characters found after the matrix");
   }
 }
 

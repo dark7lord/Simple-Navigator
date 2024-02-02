@@ -86,8 +86,8 @@ void CLI::GetShortestPathsBetweenAllVertices() {
   Matrix matrix = alg.GetShortestPathsBetweenAllVertices(graph_);
   std::cout << "\nMatrix of shortest paths between all vertices of the graph:\n"
             << std::endl;
-  // PrintMatrix(matrix);
-  std::cout << matrix;
+  PrintMatrix(matrix);
+  // std::cout << matrix;
 }
 
 void CLI::GetLeastSpanningTree() {
