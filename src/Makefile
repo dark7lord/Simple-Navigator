@@ -42,9 +42,6 @@ $(ALGS):
 $(CLI):
 	@echo ...compiling $(CLI_NAME) && make -C $(CLI_PATH)
 
-$(CLI_NAME):
-	ran lib 
-
 clean:
 	@rm -f $(NAME)
 	@echo ...clean $(GRAPHS_NAME) && make --silent -C $(GRAPHS_PATH) clean
@@ -72,7 +69,7 @@ coverage:
 	@make --silent -C $(GRAPHS_PATH) coverage
 	@make --silent -C $(ALGS_PATH) coverage
 
-coverage: 	
+coverage:
 	make --silent -C $(GRAPHS_PATH) coverage
 	make --silent -C $(ALGS_PATH) coverage
 
