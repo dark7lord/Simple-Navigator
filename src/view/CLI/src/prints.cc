@@ -26,7 +26,7 @@ void CLI::PrintMatrix(const Matrix& matrix) {
   std::cout << std::endl;
 }
 
-static std::string UrlEncode(const std::string &value) {
+static std::string UrlEncode(const std::string& value) {
   std::ostringstream escaped;
   escaped.fill('0');
   escaped << std::hex;
@@ -85,4 +85,4 @@ void CLI::PrintGraphInBrowser(const Graph& graph) {
 //   return os;
 // }
 
-} // namespace s21
+}  // namespace s21

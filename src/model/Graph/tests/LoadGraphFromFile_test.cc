@@ -37,13 +37,14 @@ TEST_F(GraphFixture, ParsingErrorTest) {
 }
 
 TEST_F(GraphFixture, EmptyFileTest) {
-  ASSERT_THROW(graph.LoadGraphFromFile("tests/files/empty_file.txt"), // ?
+  ASSERT_THROW(graph.LoadGraphFromFile("tests/files/empty_file.txt"),  // ?
                s21::EmptyFileException);
 }
 
 TEST_F(GraphFixture, AlmostEmptyFileTest) {
-  ASSERT_THROW(graph.LoadGraphFromFile("tests/files/almost_empty_file.txt"), // ?
-               s21::EmptyFileException);
+  ASSERT_THROW(
+      graph.LoadGraphFromFile("tests/files/almost_empty_file.txt"),  // ?
+      s21::EmptyFileException);
 }
 
 TEST_F(GraphFixture, MatrixSizeMismatchTest1) {
@@ -63,18 +64,12 @@ TEST_F(GraphFixture, NegativeNumbersTest) {
 
 TEST_F(GraphFixture, ExtraLineAfterMatrixTest) {
   std::string filename = "tests/files/extra_line_after_matrix.txt";
-  ASSERT_THROW(
-    graph.LoadGraphFromFile(filename),
-    s21::MatrixSizeMismatchException
-  );
+  ASSERT_THROW(graph.LoadGraphFromFile(filename),
+               s21::MatrixSizeMismatchException);
 }
 
 TEST_F(GraphFixture, EmptyFileTest2) {
   std::string filename = "tests/files/empty_matrix.txt";
   // graph.LoadGraphFromFile(filename);
-  ASSERT_THROW(
-    graph.ToString(),
-    s21::EmptyGraphException
-  );
+  ASSERT_THROW(graph.ToString(), s21::EmptyGraphException);
 }
-
