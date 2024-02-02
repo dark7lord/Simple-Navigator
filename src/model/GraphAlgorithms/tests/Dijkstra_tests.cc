@@ -26,8 +26,6 @@ TEST(GraphAlgorithmsTest, InvalidVertices) {
   s21::GraphAlgorithms algorithms;
 
   // Вершины 4 и 2 не существуют в графе 3x3, поэтому ожидаем исключение
-  ASSERT_THROW(
-    algorithms.GetShortestPathBetweenVertices(graph, 4, 2),
-    std::invalid_argument
-  );
+  ASSERT_THROW(algorithms.GetShortestPathBetweenVertices(graph, 4, 2),
+               std::invalid_argument);
 }

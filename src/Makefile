@@ -46,10 +46,22 @@ clean:
 	@rm -f $(NAME)
 	@echo ...clean $(GRAPHS_NAME) && make --silent -C $(GRAPHS_PATH) clean
 	@echo ...clean $(ALGS_NAME) && make --silent -C $(ALGS_PATH) clean
+	@echo ...clean $(CLI_NAME) && make --silent -C $(CLI_PATH) clean
 	@echo Cleaning success!
 
 test:
-	make --silent -C $(GRAPHS_PATH) test
-	make --silent -C $(ALGS_PATH) test
+	@make --silent -C $(GRAPHS_PATH) test
+	@make --silent -C $(ALGS_PATH) test
 
+clang_n:
+	@make --silent -C $(GRAPHS_PATH) clang_n
+	@make --silent -C $(ALGS_PATH) clang_n
+	@make --silent -C $(CLI_PATH) clang_n
+	@echo clang_n for all!
+
+clang_i:
+	@make --silent -C $(GRAPHS_PATH) clang_i
+	@make --silent -C $(ALGS_PATH) clang_i
+	@make --silent -C $(CLI_PATH) clang_i
+	@echo clang_i for all!
 re: clean all

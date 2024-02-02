@@ -95,6 +95,6 @@ clean:
 re: clean $(TEMP_DIRS) all
 
 clang_n:
-	clang-format -style=Google -n src/*.cc inc/*.h *.h
+	clang-format -style=Google -n src/*.cc inc/*.h tests/*.cc *.h
 clang_i:
-	clang-format -style=Google -i src/*.cc inc/*.h *.h
+	clang-format -style=Google -i src/*.cc inc/*.h tests/*.cc *.h

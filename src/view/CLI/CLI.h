@@ -69,7 +69,8 @@ class CLI {
           {"Get least spanning tree", [this]() { GetLeastSpanningTree(); }},
           {"Solve traveling salesman problem",
            [this]() { SolveTravelingSalesmanProblem(); }},
-          {"Print (adjacency matrix)", [this]() { PrintMatrix(graph_.GetMatrix()); }},
+          {"Print (adjacency matrix)",
+           [this]() { PrintMatrix(graph_.GetMatrix()); }},
           {"Print in browser (graph)",
            [this]() { PrintGraphInBrowser(graph_); }},
           {"Exit", [this]() { current_state_ = (State::Exit); }}};

@@ -32,7 +32,6 @@ class Graph {
  private:
   Matrix matrix_;
   size_t size_matrix_;
-
 };
 
 }  // namespace s21
