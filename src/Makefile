@@ -52,4 +52,8 @@ test:
 	make --silent -C $(GRAPHS_PATH) test
 	make --silent -C $(ALGS_PATH) test
 
+coverage: 	
+	make --silent -C $(GRAPHS_PATH) coverage
+	make --silent -C $(ALGS_PATH) coverage
+
 re: clean all
