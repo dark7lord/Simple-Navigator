@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "../s21_graph.h"
+#include "s21_graph.h"
 
 class GraphFixture : public testing::Test {
  protected:

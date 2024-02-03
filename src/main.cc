@@ -1,5 +1,3 @@
-#include "Graph/s21_graph.h"
-#include "GraphAlgorithms/s21_graph_algorithms.h"
 #include "cli/s21_cli.h"
 
 int main() {

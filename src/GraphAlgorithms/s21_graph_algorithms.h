@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-#include "../Graph/s21_graph.h"
-#include "../templates/s21_list.h"
-#include "../templates/s21_queue.h"
-#include "../templates/s21_stack.h"
+#include "s21_graph.h"
+#include "s21_list.h"
+#include "s21_queue.h"
+#include "s21_stack.h"
 
 namespace s21 {
 struct TsmResult {
@@ -83,4 +83,4 @@ class AntGraph {
 };
 
 }  // namespace s21
-#endif // S21_GRAPH_ALGORITHMS_H
+#endif  // S21_GRAPH_ALGORITHMS_H

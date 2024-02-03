@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../s21_graph_algorithms.h"
+#include "s21_graph_algorithms.h"
 
 const std::size_t infinity = -1;
 

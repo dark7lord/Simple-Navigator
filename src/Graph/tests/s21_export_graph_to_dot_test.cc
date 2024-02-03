@@ -1,5 +1,5 @@
-#include "../s21_graph.h"
 #include "gtest/gtest.h"
+#include "s21_graph.h"
 
 // Функция для тестирования экспорта графа
 void TestExportGraphToDot(const std::string& input_file,

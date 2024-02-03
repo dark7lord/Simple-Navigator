@@ -3,8 +3,8 @@
 
 #include <map>
 
-#include "../Graph/s21_graph.h"
-#include "../GraphAlgorithms/s21_graph_algorithms.h"
+#include "s21_graph.h"
+#include "s21_graph_algorithms.h"
 
 namespace s21 {
 

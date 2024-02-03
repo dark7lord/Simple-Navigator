@@ -51,18 +51,18 @@ $(TEMP_DIRS):
 	mkdir -p $@
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC) | $(OBJ_DIR)
-	$(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) -c $< -o $@ -I.
 
 $(TEST_TEMP_DIR)%.o: $(SRC_DIR)%.cc | $(TEST_TEMP_DIR)
-	$(CC) $(TEST_FLAGS) -c $< -o $@
+	$(CC) $(TEST_FLAGS) -c $< -o $@ -I.
 
 $(TEST_TEMP_DIR)%.o: $(TEST_DIR)%.cc | $(TEST_TEMP_DIR)
-	$(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) -c $< -o $@ -I. -I gtest
 
 test: all $(TEST_TMP_FILES) | $(TEST_TEMP_DIR)
 	@$(CC) $(TEST_FLAGS) $(GTEST_LIBS) $(TEST_TMP_FILES) -o $(TEST_TEMP_DIR)test.exe
 	@$(TEST_TEMP_DIR)test.exe || true
-	@rm -f $(TEST_DIR)files/*.tmp.dot
+	@rm -f $(TEST_DIR)files/*.tmp.dot tests/tests.exe
 
 coverage: test | $(REPORT_DIR)
 	@lcov -t "coverage" \

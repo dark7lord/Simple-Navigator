@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../s21_graph_algorithms.h"
+#include "s21_graph_algorithms.h"
 
 namespace s21 {
 TEST(Dijkstra, test1) {

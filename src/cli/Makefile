@@ -27,21 +27,21 @@ INC				:=	$(addprefix $(INC_DIR), $(INC_FILES)) $(HEADER)
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
-	echo Compiling $(NAME) success!
+	@ar rcs $(NAME) $(OBJ)
+	@echo Compiling $(NAME) success!
 
 
 $(OBJ_DIR):
-	mkdir $(OBJ_DIR)
+	@mkdir $(OBJ_DIR)
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC) | $(OBJ_DIR)
-	$(CC) $(CCFLAGS) -c $< -o $@
+	@$(CC) $(CCFLAGS) -c $< -o $@ -I. -I ../Graph -I ../GraphAlgorithms -I ../templates
 
 clean:
-	rm -rf obj $(NAME)
+	@rm -rf obj $(NAME)
 	@echo Cleaning success!
 
-re: clean all
+re: clean obj all
 
 clang_n:
 	clang-format -style=Google -n src/*.cc inc/*.h *.h

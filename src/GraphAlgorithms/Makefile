@@ -57,13 +57,13 @@ $(TEMP_DIRS):
 	mkdir -p $@
 
 $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC) | $(OBJ_DIR)
-	$(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) -c $< -o $@ -I. -I ../Graph -I ../templates
 
 $(TEST_TEMP_DIR)%.o: $(SRC_DIR)%.cc | $(TEST_TEMP_DIR)
-	$(CC) $(CCFLAGS) $(TEST_FLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) $(TEST_FLAGS) -c $< -o $@ -I. -I ../Graph -I ../templates
 
 $(TEST_TEMP_DIR)%.o: $(TEST_DIR)%.cc | $(TEST_TEMP_DIR)
-	$(CC) $(CCFLAGS) -c $< -o $@
+	$(CC) $(CCFLAGS) -c $< -o $@ -I. -I ../Graph -I ../templates
 
 test: all $(TEST_TMP_FILES) | $(TEST_TEMP_DIR)
 	@make -C ../Graph
