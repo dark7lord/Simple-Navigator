@@ -4,15 +4,15 @@ CC				:= g++
 CCFLAGS			:= -Wall -Wextra -Werror -std=c++17
 
 ALGS_NAME		:= s21_graph_algorithms.a
-ALGS_PATH		:= model/GraphAlgorithms
+ALGS_PATH		:= GraphAlgorithms
 ALGS			:= $(ALGS_PATH)/$(ALGS_NAME)
 
 GRAPHS_NAME		:= s21_graph.a
-GRAPHS_PATH		:= model/Graph
+GRAPHS_PATH		:= Graph
 GRAPHS			:= $(GRAPHS_PATH)/$(GRAPHS_NAME)
 
 CLI_NAME		:= s21_cli.a
-CLI_PATH		:= view/CLI
+CLI_PATH		:= CLI
 CLI				:= $(CLI_PATH)/$(CLI_NAME)
 
 SRC				:= main.cc
@@ -68,9 +68,5 @@ clang_i:
 coverage:
 	@make --silent -C $(GRAPHS_PATH) coverage
 	@make --silent -C $(ALGS_PATH) coverage
-
-coverage:
-	make --silent -C $(GRAPHS_PATH) coverage
-	make --silent -C $(ALGS_PATH) coverage
 
 re: clean all

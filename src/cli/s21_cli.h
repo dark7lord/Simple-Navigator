@@ -1,10 +1,10 @@
-#ifndef CLI_H
-#define CLI_H
+#ifndef S21_CLI_H
+#define S21_CLI_H
 
 #include <map>
 
-#include "../../model/Graph/s21_graph.h"
-#include "../../model/GraphAlgorithms/s21_graph_algorithms.h"
+#include "../Graph/s21_graph.h"
+#include "../GraphAlgorithms/s21_graph_algorithms.h"
 
 namespace s21 {
 
@@ -88,4 +88,4 @@ class CLI {
 
 }  // namespace s21
 
-#endif  // CLI_H
+#endif  // S21_CLI_H

@@ -1,5 +1,5 @@
-#ifndef GRAPH_EXCEPTIONS_H
-#define GRAPH_EXCEPTIONS_H
+#ifndef S21_GRAPH_EXCEPTIONS_H
+#define S21_GRAPH_EXCEPTIONS_H
 
 #include <stdexcept>
 #include <string>
@@ -50,4 +50,4 @@ class EmptyGraphException : public GraphException {
 
 }  // namespace s21
 
-#endif  // GRAPH_EXCEPTIONS_H
+#endif  // S21_GRAPH_EXCEPTIONS_H

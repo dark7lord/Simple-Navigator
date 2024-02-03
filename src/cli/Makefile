@@ -8,16 +8,15 @@ SRC_DIR			:=	src/
 OBJ_DIR			:=	obj/
 INC_DIR			:=	inc/
 
-SRC_FILES		:=	cli.cc \
-					files.cc \
-					inputs.cc \
-					algs_methods.cc \
-					prints.cc
-
+SRC_FILES		:=	s21_cli.cc \
+					s21_files.cc \
+					s21_inputs.cc \
+					s21_algs_methods.cc \
+					s21_prints.cc
 
 OBJ_FILES		:=	$(SRC_FILES:.cc=.o)
-INC_FILES		:=	colors.h
-HEADER			:=	cli.h
+INC_FILES		:=	s21_colors.h
+HEADER			:=	s21_cli.h
 
 SRC				:=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ				:=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))

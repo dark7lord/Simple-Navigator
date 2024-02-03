@@ -1,6 +1,6 @@
-#include "model/Graph/s21_graph.h"
-#include "model/GraphAlgorithms/s21_graph_algorithms.h"
-#include "view/CLI/cli.h"
+#include "Graph/s21_graph.h"
+#include "GraphAlgorithms/s21_graph_algorithms.h"
+#include "cli/s21_cli.h"
 
 int main() {
   s21::Graph CLI;

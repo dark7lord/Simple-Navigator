@@ -1,5 +1,4 @@
-NAME			:=	s21_graph_algorithms.a
-GRAPH_NAME		:=	../Graph/s21_graph.a
+NAME			:=	s21_graph.a
 
 CC				:=	g++
 CCFLAGS			:=	-Wall -Wextra -Werror -std=c++17
@@ -18,22 +17,17 @@ TEMP_DIRS		:=	$(OBJ_DIR) \
 					$(TEST_TEMP_DIR) \
 					$(REPORT_DIR)
 
-SRC_FILES		:=	s21_graph_algorithms.cc \
-					get_shortest_paths_between_all_vertices.cc \
-					s21_get_least_spanninng_tree.cc \
-					Dijkstra’s_algorithm.cc \
-					Ant_algorythm.cc
+SRC_FILES		:=	s21_graph.cc \
+					s21_load_graph_from_file.cc \
+					s21_export_graph_to_dot.cc
 
 OBJ_FILES		:=	$(SRC_FILES:.cc=.o)
-INC_FILES		:=	lie.h
-HEADER			:=	s21_graph_algorithms.h
-TEST_FILES		:=	tests_get_least_spanning_tree.cc \
-					get_shortest_paths_between_all_vertices_test.cc \
-					AntAlg_tests.cc \
-					BFS_tests.cc \
-					DFS_tests.cc \
-					Dijkstra_tests.cc \
-					run_tests.cc
+INC_FILES		:=	s21_graph_exceptions.h
+HEADER			:=	s21_graph.h
+
+TEST_FILES		:=	s21_run_tests.cc \
+					s21_load_graph_from_file_test.cc \
+					s21_export_graph_to_dot_test.cc
 
 TEST_EXE		:=	tests.exe
 
@@ -60,18 +54,15 @@ $(OBJ_DIR)%.o : $(SRC_DIR)%.cc $(INC) | $(OBJ_DIR)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 $(TEST_TEMP_DIR)%.o: $(SRC_DIR)%.cc | $(TEST_TEMP_DIR)
-	$(CC) $(CCFLAGS) $(TEST_FLAGS) -c $< -o $@
+	$(CC) $(TEST_FLAGS) -c $< -o $@
 
 $(TEST_TEMP_DIR)%.o: $(TEST_DIR)%.cc | $(TEST_TEMP_DIR)
 	$(CC) $(CCFLAGS) -c $< -o $@
 
 test: all $(TEST_TMP_FILES) | $(TEST_TEMP_DIR)
-	@make -C ../Graph
-	@$(CC) $(TEST_FLAGS) $(TEST_TMP_FILES) $(GTEST_LIBS) $(GRAPH_NAME)  -o $(TEST_DIR)$(TEST_EXE) $(LDFLAGS)
-	./$(TEST_DIR)$(TEST_EXE) || true
-
-#	leaks -atExit -- ./$(TEST_DIR)$(TEST_EXE)
-	rm -f $(TEST_DIR)$(TEST_EXE)
+	@$(CC) $(TEST_FLAGS) $(GTEST_LIBS) $(TEST_TMP_FILES) -o $(TEST_TEMP_DIR)test.exe
+	@$(TEST_TEMP_DIR)test.exe || true
+	@rm -f $(TEST_DIR)files/*.tmp.dot
 
 coverage: test | $(REPORT_DIR)
 	@lcov -t "coverage" \
@@ -84,12 +75,11 @@ coverage: test | $(REPORT_DIR)
 	@genhtml -o $(REPORT_DIR) $(REPORT_DIR)coverage.info \
 		--quiet \
 		--exclude "10.3.0*"\
-		--exclude "templates"\
 		 && echo "...Compiling report.html"
-	open $(REPORT_DIR)index.html && echo "...Opening report.html"
+	@open $(REPORT_DIR)/index.html && echo "...Opening report.html"
 
 clean:
-	@rm -rf $(TEMP_DIRS) $(NAME)
+	rm -rf $(TEMP_DIRS) $(NAME)
 	@echo Cleaning success!
 
 re: clean $(TEMP_DIRS) all

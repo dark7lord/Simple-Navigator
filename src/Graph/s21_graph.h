@@ -1,5 +1,5 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#ifndef S21_GRAPH_H
+#define S21_GRAPH_H
 
 #include <fstream>
 #include <iomanip>
@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "inc/GraphExceptions.h"
+#include "inc/s21_graph_exceptions.h"
 
 namespace s21 {
 
@@ -22,8 +22,6 @@ class Graph {
 
   void LoadGraphFromFile(const std::string& filename);
   void ExportGraphToDot(const std::string& filename);
-  // void PrintGraph() const;
-  // void PrintGraphInBrowser();
   size_t GetSize() const { return size_matrix_; }
   Matrix GetMatrix() const { return matrix_; }
   const std::string ToString() const;
@@ -35,4 +33,4 @@ class Graph {
 };
 
 }  // namespace s21
-#endif
+#endif  // S21_GRAPH_H

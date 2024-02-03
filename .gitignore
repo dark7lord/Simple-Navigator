@@ -52,4 +52,5 @@ dkms.conf
 
 # Editor
 .vscode
+.idea
 .editorconfig

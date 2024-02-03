@@ -1,5 +1,5 @@
-#ifndef GRAPH_ALGORITHMS_H
-#define GRAPH_ALGORITHMS_H
+#ifndef S21_GRAPH_ALGORITHMS_H
+#define S21_GRAPH_ALGORITHMS_H
 
 #include <climits>
 #include <iostream>
@@ -83,4 +83,4 @@ class AntGraph {
 };
 
 }  // namespace s21
-#endif
+#endif // S21_GRAPH_ALGORITHMS_H
