@@ -45,6 +45,10 @@ $(ALGS):
 $(CLI):
 	@echo ...compiling $(CLI_NAME) && make -C $(CLI_PATH)
 
+s21_graph_algorithms.a: $(ALGS)
+
+s21_graph.a: $(GRAPHS)
+
 clean:
 	@rm -f $(NAME)
 	@echo ...clean $(GRAPHS_NAME) && make --silent -C $(GRAPHS_PATH) clean
@@ -57,15 +61,15 @@ test:
 	@make --silent -C $(ALGS_PATH) test
 
 clang_n:
-	@make --silent -C $(GRAPHS_PATH) clang_n
-	@make --silent -C $(ALGS_PATH) clang_n
-	@make --silent -C $(CLI_PATH) clang_n
+	make -C $(GRAPHS_PATH) clang_n
+	make -C $(ALGS_PATH) clang_n
+	make -C $(CLI_PATH) clang_n
 	@echo clang_n for all!
 
 clang_i:
-	@make --silent -C $(GRAPHS_PATH) clang_i
-	@make --silent -C $(ALGS_PATH) clang_i
-	@make --silent -C $(CLI_PATH) clang_i
+# make -C $(GRAPHS_PATH) clang_i
+# make -C $(ALGS_PATH) clang_i
+# make -C $(CLI_PATH) clang_i
 	@echo clang_i for all!
 
 coverage:
